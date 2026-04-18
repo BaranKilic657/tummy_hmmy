@@ -17,6 +17,7 @@ type GeminiContent = {
 };
 
 type VertexAuthMode = "api_key" | "bearer";
+type LlmProvider = "vertex" | "gemini";
 type CalendarContextEvent = {
   day: string;
   time: string;
@@ -212,14 +213,40 @@ async function callVertexGenerateContent(
 
 export async function POST(request: Request) {
   try {
-    const llmKey = process.env.LLM_KEY?.trim();
+    const legacyLlmKey = process.env.LLM_KEY?.trim() || process.env.LLM_API_KEY?.trim();
+    const geminiApiKey = process.env.GEMINI_API_KEY?.trim() || process.env.GOOGLE_API_KEY?.trim() || legacyLlmKey;
     const llmModel = process.env.LLM_MODEL?.trim() || process.env.VERTEX_MODEL?.trim() || "gemini-2.5-flash";
     const vertexProjectId = process.env.VERTEX_PROJECT_ID?.trim();
     const vertexLocation = process.env.VERTEX_LOCATION?.trim() || "us-central1";
-    const vertexAuthMode = (process.env.VERTEX_AUTH_MODE?.trim() as VertexAuthMode | undefined) ?? "api_key";
+    const vertexApiKey =
+      process.env.VERTEX_API_KEY?.trim() || process.env.GOOGLE_API_KEY?.trim() || legacyLlmKey;
+    const vertexBearerToken =
+      process.env.VERTEX_BEARER_TOKEN?.trim() || process.env.GOOGLE_OAUTH_ACCESS_TOKEN?.trim() || legacyLlmKey;
+    const configuredVertexAuthMode = process.env.VERTEX_AUTH_MODE?.trim() as VertexAuthMode | undefined;
+    const vertexAuthMode =
+      configuredVertexAuthMode ?? (vertexBearerToken ? "bearer" : "api_key");
+    const configuredProvider = process.env.LLM_PROVIDER?.trim().toLowerCase() as LlmProvider | undefined;
+    const hasVertexConfigHints =
+      Boolean(vertexProjectId) ||
+      Boolean(process.env.VERTEX_AUTH_MODE?.trim()) ||
+      Boolean(process.env.VERTEX_API_KEY?.trim()) ||
+      Boolean(process.env.VERTEX_BEARER_TOKEN?.trim());
+    const provider: LlmProvider = configuredProvider ?? (hasVertexConfigHints ? "vertex" : "gemini");
 
-    if (!llmKey) {
-      return NextResponse.json({ error: "LLM_KEY is missing." }, { status: 500 });
+    if (!geminiApiKey && !vertexApiKey && !vertexBearerToken) {
+      return NextResponse.json(
+        {
+          error:
+            "No LLM key found. Set one of: LLM_KEY, LLM_API_KEY, GEMINI_API_KEY, or GOOGLE_API_KEY.",
+        },
+        { status: 500 },
+      );
+    }
+    if (configuredProvider && configuredProvider !== "vertex" && configuredProvider !== "gemini") {
+      return NextResponse.json(
+        { error: 'LLM_PROVIDER must be either "vertex" or "gemini".' },
+        { status: 500 },
+      );
     }
     if (vertexAuthMode !== "api_key" && vertexAuthMode !== "bearer") {
       return NextResponse.json(
@@ -243,17 +270,50 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "No message was sent." }, { status: 400 });
     }
 
-    const result = vertexProjectId
+    if (provider === "vertex") {
+      if (!vertexProjectId) {
+        return NextResponse.json(
+          {
+            error:
+              "LLM_PROVIDER=vertex requires VERTEX_PROJECT_ID. Add it to ensure paid Vertex billing is used.",
+          },
+          { status: 500 },
+        );
+      }
+
+      if (vertexAuthMode === "api_key" && !vertexApiKey) {
+        return NextResponse.json(
+          {
+            error:
+              "VERTEX_AUTH_MODE=api_key requires VERTEX_API_KEY (or GOOGLE_API_KEY/LLM_KEY).",
+          },
+          { status: 500 },
+        );
+      }
+
+      if (vertexAuthMode === "bearer" && !vertexBearerToken) {
+        return NextResponse.json(
+          {
+            error:
+              "VERTEX_AUTH_MODE=bearer requires VERTEX_BEARER_TOKEN (or LLM_KEY/LLM_API_KEY as bearer token).",
+          },
+          { status: 500 },
+        );
+      }
+    }
+
+    const result =
+      provider === "vertex"
       ? await callVertexGenerateContent(
           normalized,
-          llmKey,
+          vertexAuthMode === "bearer" ? vertexBearerToken! : vertexApiKey!,
           llmModel,
-          vertexProjectId,
+          vertexProjectId!,
           vertexLocation,
           vertexAuthMode,
           fullSystemContext,
         )
-      : await callGeminiApiGenerateContent(normalized, llmKey, llmModel, fullSystemContext);
+      : await callGeminiApiGenerateContent(normalized, geminiApiKey!, llmModel, fullSystemContext);
 
     if (!result.ok) {
       return NextResponse.json(
@@ -262,7 +322,7 @@ export async function POST(request: Request) {
       );
     }
 
-    return NextResponse.json({ reply: result.reply });
+    return NextResponse.json({ reply: result.reply, provider });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json({ error: message }, { status: 500 });

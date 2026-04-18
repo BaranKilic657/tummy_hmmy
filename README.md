@@ -559,27 +559,46 @@ npm run build
 
 ## Environment Variables
 
-### Bedrock chat
+### Chat provider (Gemini / Vertex)
 
-Use one of:
+The chat route in `src/app/api/chat/route.ts` supports two providers:
 
-```bash
-BEDROCK_API_KEY=...
-```
+- `vertex` (recommended for paid usage)
+- `gemini` (direct Gemini API)
 
-or:
-
-```bash
-AWS_ACCESS_KEY_ID=...
-AWS_SECRET_ACCESS_KEY=...
-```
-
-Optional:
+#### Use paid Vertex billing (recommended)
 
 ```bash
-BEDROCK_REGION=us-east-1
-BEDROCK_MODEL_ID=us.anthropic.claude-3-5-haiku-20241022-v1:0
+LLM_PROVIDER=vertex
+VERTEX_PROJECT_ID=your-gcp-project-id
+VERTEX_LOCATION=us-central1
+VERTEX_MODEL=gemini-2.5-flash
+
+# choose one auth mode:
+VERTEX_AUTH_MODE=api_key
+VERTEX_API_KEY=your-vertex-enabled-key
+
+# or
+VERTEX_AUTH_MODE=bearer
+VERTEX_BEARER_TOKEN=your-google-oauth-access-token
 ```
+
+Important: when `LLM_PROVIDER=vertex`, the server now fails fast if Vertex config is incomplete. It will not silently fall back to free-tier Gemini API calls.
+
+#### Use direct Gemini API
+
+```bash
+LLM_PROVIDER=gemini
+GEMINI_API_KEY=your-gemini-api-key
+LLM_MODEL=gemini-2.5-flash
+```
+
+Accepted key aliases for compatibility:
+
+- `LLM_KEY`
+- `LLM_API_KEY`
+- `GEMINI_API_KEY`
+- `GOOGLE_API_KEY`
 
 ### Planned `cognee` memory mode
 
