@@ -7,13 +7,21 @@ import { MoodleDetail } from "../components/home/details/MoodleDetail";
 import { TopBar } from "../components/home/TopBar";
 import { getTodayCalendarData } from "../components/home/data/calendarData";
 import { AutomationsTile } from "../components/home/tiles/AutomationsTile";
+import { CampusFinderTile } from "../components/home/tiles/CampusFinderTile";
 import { CalendarTile } from "../components/home/tiles/CalendarTile";
 import { CopilotTile } from "../components/home/tiles/CopilotTile";
 import { MensaTile } from "../components/home/tiles/MensaTile";
 import { MoodleTile } from "../components/home/tiles/MoodleTile";
 import { TumOnlineTile } from "../components/home/tiles/TumOnlineTile";
 
-type DashboardTileId = "copilot" | "calendar" | "moodle" | "tumonline" | "mensa" | "automations";
+type DashboardTileId =
+  | "copilot"
+  | "campusfinder"
+  | "calendar"
+  | "moodle"
+  | "tumonline"
+  | "mensa"
+  | "automations";
 
 type TileSpec = {
   id: DashboardTileId;
@@ -21,14 +29,16 @@ type TileSpec = {
 };
 
 const TILE_SPECS: TileSpec[] = [
+  { id: "copilot", weight: 1 },
+  { id: "campusfinder", weight: 2 },
   { id: "moodle", weight: 2 },
-  { id: "calendar", weight: 3 },
   { id: "mensa", weight: 2 },
   { id: "tumonline", weight: 1 },
 ];
 
 const TILE_TITLES: Record<DashboardTileId, string> = {
   copilot: "UNI Copilot",
+  campusfinder: "Campus Finder",
   calendar: "Calendar",
   moodle: "Moodle",
   tumonline: "TUMonline",
@@ -61,6 +71,8 @@ export default function HomePage() {
     switch (tileId) {
       case "copilot":
         return <CopilotTile />;
+      case "campusfinder":
+        return <CampusFinderTile />;
       case "calendar":
         return (
           <CalendarTile
@@ -98,10 +110,10 @@ export default function HomePage() {
   };
 
   const balancedColumns = useMemo(() => {
-    const columns: TileSpec[][] = [[{ id: "copilot", weight: 1 }], []];
-    const heights = [1, 0];
+    const columns: TileSpec[][] = [[], []];
+    const heights = [0, 0];
 
-    for (const spec of TILE_SPECS) {
+    for (const spec of TILE_SPECS.filter((tile) => tile.id !== "copilot" && tile.id !== "calendar")) {
       const targetColumnIndex = heights[0] <= heights[1] ? 0 : 1;
       columns[targetColumnIndex].push(spec);
       heights[targetColumnIndex] += spec.weight;
@@ -116,29 +128,81 @@ export default function HomePage() {
         <TopBar title={topTitle} />
 
         <section className="home-columns" aria-label="Dashboard widgets">
-          {balancedColumns.map((column, columnIndex) => (
-            <div key={`column-${columnIndex}`} className="home-col">
-              {column.map((tile) => (
-                <Fragment key={tile.id}>
-                  <div
-                    className={`tile-click-target tile-${tile.id}`}
-                    role="button"
-                    tabIndex={0}
-                    onClick={() => setActiveTile(tile.id)}
-                    onKeyDown={(event) => {
-                      if (event.key === "Enter" || event.key === " ") {
-                        event.preventDefault();
-                        setActiveTile(tile.id);
-                      }
-                    }}
-                    aria-label={`Open ${TILE_TITLES[tile.id]}`}
-                  >
-                    {renderDashboardTile(tile.id)}
-                  </div>
-                </Fragment>
-              ))}
+          <div className="home-col">
+            <div
+              className="tile-click-target tile-copilot"
+              role="button"
+              tabIndex={0}
+              onClick={() => setActiveTile("copilot")}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  setActiveTile("copilot");
+                }
+              }}
+              aria-label={`Open ${TILE_TITLES.copilot}`}
+            >
+              {renderDashboardTile("copilot")}
             </div>
-          ))}
+
+            <div
+              className="tile-click-target tile-calendar"
+              role="button"
+              tabIndex={0}
+              onClick={() => setActiveTile("calendar")}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  setActiveTile("calendar");
+                }
+              }}
+              aria-label={`Open ${TILE_TITLES.calendar}`}
+            >
+              {renderDashboardTile("calendar")}
+            </div>
+
+            {balancedColumns[0].map((tile) => (
+              <Fragment key={tile.id}>
+                <div
+                  className={`tile-click-target tile-${tile.id}`}
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => setActiveTile(tile.id)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      setActiveTile(tile.id);
+                    }
+                  }}
+                  aria-label={`Open ${TILE_TITLES[tile.id]}`}
+                >
+                  {renderDashboardTile(tile.id)}
+                </div>
+              </Fragment>
+            ))}
+          </div>
+
+          <div className="home-col">
+            {balancedColumns[1].map((tile) => (
+              <Fragment key={tile.id}>
+                <div
+                  className={`tile-click-target tile-${tile.id}`}
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => setActiveTile(tile.id)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      setActiveTile(tile.id);
+                    }
+                  }}
+                  aria-label={`Open ${TILE_TITLES[tile.id]}`}
+                >
+                  {renderDashboardTile(tile.id)}
+                </div>
+              </Fragment>
+            ))}
+          </div>
         </section>
 
         <section className="home-grid" aria-label="Automation widgets">

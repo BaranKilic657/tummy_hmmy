@@ -15,7 +15,14 @@ export function CalendarDetail() {
                 <div key={`${day}-${entry.time}-${entry.module}`} className="calendar-day-entry">
                   <span>{entry.time}</span>
                   <strong>{entry.module}</strong>
-                  <small>{entry.room}</small>
+                  <small>
+                    <a
+                      href={`https://nav.tum.de/search?q=${encodeURIComponent(entry.room)}`}
+                      className="calendar-room-link"
+                    >
+                      {entry.room}
+                    </a>
+                  </small>
                 </div>
               ))}
             </div>
