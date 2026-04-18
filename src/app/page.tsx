@@ -82,53 +82,74 @@ export default function HomePage() {
           </div>
         </header>
 
-        <section className="home-grid" aria-label="Dashboard widgets">
-          <article className="widget widget-copilot">
-            <h2>UNI Copilot</h2>
-            <p>Frag nach Fristen, Räumen, Aufgaben oder Lernplan.</p>
-            <div className="copilot-input">
-              <span>Frag deinen Copilot...</span>
-              <button type="button" aria-label="Send">
-                →
+        <section className="home-columns" aria-label="Dashboard widgets">
+          <div className="home-col">
+            <article className="widget widget-copilot">
+              <h2>UNI Copilot</h2>
+              <p>Frag nach Fristen, Räumen, Aufgaben oder Lernplan.</p>
+              <div className="copilot-input">
+                <span>Frag deinen Copilot...</span>
+                <button type="button" aria-label="Send">
+                  →
+                </button>
+              </div>
+            </article>
+
+            <article className="widget widget-moodle">
+              <h2>Moodle</h2>
+              <p>Kursräume, Abgaben und neue Ankündigungen.</p>
+            </article>
+          </div>
+
+          <div className="home-col">
+            <article className="widget widget-calendar">
+              <h2>Kalender</h2>
+              <p>Heutiger Stundenplan ({todayLabel})</p>
+              <button
+                type="button"
+                className="calendar-preview"
+                onClick={() => setIsCalendarOpen(true)}
+                aria-label="Wochenkalender öffnen"
+              >
+                {todayEntries.map((entry) => (
+                  <span key={`${entry.time}-${entry.module}`} className="calendar-row">
+                    <strong>{entry.time}</strong>
+                    <em>{entry.module}</em>
+                  </span>
+                ))}
+                <span className="calendar-preview-hint">Klick für Wochenansicht</span>
               </button>
-            </div>
-          </article>
+            </article>
 
-          <article className="widget widget-calendar">
-            <h2>Kalender</h2>
-            <p>Heutiger Stundenplan ({todayLabel})</p>
-            <button
-              type="button"
-              className="calendar-preview"
-              onClick={() => setIsCalendarOpen(true)}
-              aria-label="Wochenkalender öffnen"
-            >
-              {todayEntries.map((entry) => (
-                <span key={`${entry.time}-${entry.module}`} className="calendar-row">
-                  <strong>{entry.time}</strong>
-                  <em>{entry.module}</em>
-                </span>
-              ))}
-              <span className="calendar-preview-hint">Klick für Wochenansicht</span>
-            </button>
-          </article>
+            <article className="widget">
+              <h2>TUMonline</h2>
+              <p>Anmeldung, Notenstatus und Studieninfos.</p>
+            </article>
+          </div>
+        </section>
 
-          <article className="widget">
-            <h2>Moodle</h2>
-            <p>Kursräume, Abgaben und neue Ankündigungen.</p>
-          </article>
-
-          <article className="widget">
-            <h2>TUMonline</h2>
-            <p>Anmeldung, Notenstatus und Studieninfos.</p>
-          </article>
-
+        <section className="home-grid" aria-label="Automation widgets">
           <article className="widget widget-wide">
             <h2>Automations</h2>
-            <p>
-              Deine späteren Workflows als Kachel. Der Bereich ist aktuell nur
-              als Platzhalter-UI angelegt.
-            </p>
+            <p>Vorgefertigte Trigger als GUI-Vorschau.</p>
+            <div className="automation-grid" aria-label="Automation types">
+              <div className="automation-tile">
+                <h3>Time based</h3>
+                <p>Starte Aktionen zu festen Zeiten oder Intervallen.</p>
+              </div>
+              <div className="automation-tile">
+                <h3>Location based</h3>
+                <p>Führe Workflows aus, sobald du am Campus ankommst.</p>
+              </div>
+              <div className="automation-tile">
+                <h3>Moodle event based</h3>
+                <p>Reagiere automatisch auf neue Aufgaben und Deadlines.</p>
+              </div>
+              <div className="automation-tile">
+                <h3>Custom</h3>
+                <p>Erstelle eigene Regeln mit Bedingungen und Aktionen.</p>
+              </div>
+            </div>
           </article>
         </section>
       </section>

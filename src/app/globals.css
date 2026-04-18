@@ -486,9 +486,24 @@ body::after {
 }
 
 .home-grid {
+  margin-top: 0.8rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.8rem;
+}
+
+.home-columns {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.8rem;
+  align-items: stretch;
+}
+
+.home-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  min-height: 100%;
 }
 
 .widget {
@@ -513,7 +528,12 @@ body::after {
 }
 
 .widget-copilot {
-  min-height: 170px;
+  min-height: auto;
+}
+
+.widget-moodle {
+  min-height: 190px;
+  flex: 1;
 }
 
 .copilot-input {
@@ -555,6 +575,34 @@ body::after {
 .widget-wide {
   grid-column: 1 / -1;
   min-height: 140px;
+}
+
+.automation-grid {
+  margin-top: 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.automation-tile {
+  border: 1px solid rgba(8, 88, 93, 0.2);
+  border-radius: 12px;
+  background: linear-gradient(160deg, rgba(236, 253, 253, 0.95), rgba(224, 248, 247, 0.9));
+  padding: 0.58rem;
+  min-height: 102px;
+}
+
+.automation-tile h3 {
+  margin: 0;
+  color: #0c4349;
+  font-size: 0.86rem;
+}
+
+.automation-tile p {
+  margin: 0.34rem 0 0;
+  color: rgba(17, 78, 84, 0.9);
+  font-size: 0.75rem;
+  line-height: 1.42;
 }
 
 .widget-calendar {
@@ -752,11 +800,20 @@ body::after {
   }
 
   .home-grid {
+    margin-top: 0.8rem;
+    grid-template-columns: 1fr;
+  }
+
+  .home-columns {
     grid-template-columns: 1fr;
   }
 
   .widget-wide {
     grid-column: auto;
+  }
+
+  .automation-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .calendar-modal {
