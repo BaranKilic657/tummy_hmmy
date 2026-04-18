@@ -1,0 +1,312 @@
+/* TUM-IdP Layout by LRZ 2016 */
+html {
+    margin: 0;
+    padding: 0;
+    background-color: #FFF;
+}
+body {
+    font-family: Arial,sans-serif,HelveticaNeueLTStd,Helvetica;
+    font-size: 12px;
+    line-height: 1.5em;
+    color: #000;
+    margin: 0 auto;
+}
+
+@keyframes fadeIt {
+  0%   { background-color: #FFFFFF; }
+  5%   { background-color: #e37222; }
+  100% { background-color: #FFFFFF; }
+}
+
+html:has(.output--error) {
+    animation: fadeIt 0.5s ease-in;
+}
+
+@media (prefers-reduced-motion) {
+    html:has(.output--error) {
+        animation: none;
+    }
+}
+
+header, footer, section {
+    display: block;
+}
+
+.wrapper {
+    background-color: #fff5;
+    padding: 0px 16px;
+    max-width: 800px;
+    margin: 0px auto;
+    box-shadow: 0 0 10px #fff5;
+}
+.content {
+    overflow: hidden;
+}
+.logo-bar {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 16px;
+}
+.logo-left {
+    text-align: left;
+}
+.logo-right {
+    text-align: right;
+}
+.footer-bar {
+    font-size: 11px;
+    font-weight: bold;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    text-align: left;
+}
+.forgot-password {
+    text-align: right;
+}
+
+#nav {
+    font-size: 13px;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    text-align: right;
+    color: #333;
+    display: none;
+}
+
+.explanation {
+    font-size: 13px;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    text-align: left;
+    color: #000;
+}
+
+h1 {
+    color: #3070b3;
+    margin: 0px;
+    font-weight:bold;
+}
+
+h2 {
+    color: #a2ad00;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 0px;
+}
+
+#sp-info {
+    border-left: 2px solid #a2ad00;
+    padding-left: 8px;
+    position: relative;
+}
+
+#sp-info * {
+    margin: 4px 0px;
+}
+
+#sp-info p {
+    overflow: auto;
+    line-height: 1.5em;
+    max-height: 5.3em;
+}
+
+#sp-description.overflowing {
+    border-bottom: 1px dotted #999;
+    cursor: pointer;
+}
+
+@media (min-height: 660px) {
+    #sp-info p {
+        max-height: none;
+    }
+    #sp-description.overflowing {
+        border-bottom: none;
+    }
+}
+
+a:link,
+a:visited {
+    text-decoration: none;
+    color: #999;
+}
+a:hover {
+    text-decoration: underline;
+    color: #004682;
+}
+
+ul {
+    list-style: square;
+    margin-left: -1.2em;
+}
+
+img {
+    max-width: 100%;
+    border: none;
+}
+form {
+    padding: 0px;
+    font-size: 14px;
+}
+.loginPage form {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-size: 14px;
+}
+form label {
+    cursor: pointer;
+}
+form legend {
+    margin-bottom: 12px;
+}
+label[for=username],label[for=password]{
+    font-weight:bold;
+    margin-bottom: 2px;
+    display: block;
+}
+label[for=_shib_idp_revokeConsent],label[for=donotcache],label[for=donotcache-dummy]{
+    color:#808080;
+    font-size: 12px;
+}
+input[type=checkbox],input[type=radio]{
+    margin: 0px 6px 0px 0px;
+    position: relative;
+    top: 2px;
+}
+.form-element-wrapper {
+    margin-bottom: 12px;
+}
+.option-row {
+    margin-top: 4px;
+    margin-bottom: 16px;
+}
+.login-btn-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 354px;
+}
+.form-element {
+    display: block;
+    padding: 6px 12px;
+    border: none;
+    font-size: 12px;
+}
+.form-field {
+    width: 100%;
+    max-width: 354px;
+    box-sizing: border-box;
+    color: #000;
+    border: 1px solid #b3b3b3;
+    height: 39px;
+    padding: 6px;
+}
+.form-field-focus {
+    border-color: #a2ad00 ;
+}
+
+.form-error, .output--error {
+    padding: 4px 0px;
+    color: #e37222;
+    border-top: 1px solid #e37222;
+    border-bottom: 1px solid #e37222;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+
+.errorPage h3 {
+    padding: 4px 0px;
+    color: #e37222;
+    border-top: 1px solid #e37222;
+    border-bottom: 1px solid #e37222;
+    font-weight: bold;
+}
+
+.logoutPage h3, .logoutPropagatePage h3 {
+    padding: 4px 0px;
+    color: #3070b3;
+    border-top: 1px solid #3070b3;
+    border-bottom: 1px solid #3070b3;
+    font-weight: bold;
+}
+
+.logoutPropagatePage li {
+    line-height: 36px;
+    padding-left: 36px;
+    display: block;
+}
+.success {
+    background: url(../images/success-32x32.png) no-repeat left center;
+    line-height: 36px;
+    padding-left: 36px;
+}
+.failure {
+    background: url(../images/failure-32x32.png) no-repeat left center;
+    line-height: 36px;
+    padding-left: 36px;
+}
+
+
+input[type=submit],button {
+    box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    color: #ffffff;
+    cursor: pointer;
+    text-transform: uppercase;
+    padding: 12px 32px;
+    font-weight: bold;
+    font-size: 14px;
+    margin: 8px;
+    border: 0px;
+    background-color: #3070b3;
+    font-family: inherit;
+}
+button:hover,input:hover,button:focus,input:focus {
+    opacity: .8;
+}
+
+button[disabled] {
+    filter: grayscale(1);
+    cursor: not-allowed;
+}
+
+.btnReject {
+    background-color: #e37222 !important;
+}
+.btnAccept {
+    background-color: #3070b3 !important;
+}
+.btnLogin, .btnLogout {
+    margin-left: 0px;
+}
+
+
+.hidden {
+    display: none;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.info-banner {
+    background-color: #3070b3;
+    color: #FFF;
+    width: 100%;
+}
+.info-banner a {
+    color: #FFF;
+}
+.info-banner p {
+    max-width: 800px;
+    margin: 0px auto;
+    padding: 4px 16px;
+}
+.info-banner p::before {
+    content: " ";
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    margin-right: 5px;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAuSURBVChTY/wPBAyEACFFIHkmKBsOsGnCUMQIBFAmHJBnEjZAniJsbiIinBgYALcJF/9IsoDOAAAAAElFTkSuQmCC');
+}

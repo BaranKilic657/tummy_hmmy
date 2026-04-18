@@ -51,6 +51,24 @@ body::after {
   animation: aurora-b 24s linear infinite;
 }
 
+body.loginPage {
+  position: static;
+  font-family: Arial, sans-serif, HelveticaNeueLTStd, Helvetica;
+  font-size: 12px;
+  line-height: 1.5em;
+  background: #fff;
+  color: #000;
+  margin: 0 auto;
+  animation: none;
+}
+
+body.loginPage::before,
+body.loginPage::after {
+  content: none;
+  display: none;
+  animation: none;
+}
+
 @keyframes gradient-orbit {
   0% {
     background-position: 12% 26%, 86% 72%, 0% 0%;
@@ -203,6 +221,23 @@ body::after {
   cursor: pointer;
 }
 
+.hero-login-btn {
+  height: 2.35rem;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 1.05rem;
+  border-radius: 999px;
+  border: 1px solid rgba(14, 85, 92, 0.35);
+  background: rgba(255, 255, 255, 0.66);
+  color: #094349;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.hero-login-btn:hover {
+  background: rgba(255, 255, 255, 0.86);
+}
+
 .text-link {
   color: #0f5a61;
   text-decoration: none;
@@ -297,6 +332,218 @@ body::after {
 .ttt-cell:focus-visible {
   outline: 2px solid #08bfd2;
   outline-offset: 2px;
+}
+
+.tum-login-shell {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f4f7fa 0%, #eef2f6 100%);
+  color: #1f2f3a;
+  padding: 1rem;
+}
+
+.tum-login-wrapper {
+  max-width: 920px;
+  margin: 0 auto;
+  border: 1px solid #d6dee8;
+  background: #fff;
+  box-shadow: 0 12px 30px rgba(10, 31, 54, 0.08);
+}
+
+.tum-login-header {
+  border-bottom: 1px solid #dbe3ec;
+}
+
+.tum-login-nav {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.6rem 1rem 0;
+}
+
+.tum-login-nav a {
+  color: #1f496f;
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.tum-login-nav a:hover {
+  text-decoration: underline;
+}
+
+.tum-logo-bar {
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1rem 0.8rem;
+}
+
+.tum-logo-right {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 74px;
+  height: 38px;
+  background: #0065bd;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+}
+
+.tum-login-container {
+  padding: 1.25rem 1rem;
+}
+
+.tum-login-content h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 500;
+  color: #1c3d5a;
+}
+
+.tum-login-content p {
+  margin: 0.8rem 0;
+  line-height: 1.45;
+}
+
+.tum-sp-info {
+  margin-top: 0.9rem;
+  margin-bottom: 1rem;
+  border-top: 1px solid #e3e9f0;
+  border-bottom: 1px solid #e3e9f0;
+  padding: 0.9rem 0;
+}
+
+.tum-sp-info h2 {
+  margin: 0;
+  color: #2b4a66;
+  font-size: 1.2rem;
+}
+
+.tum-sp-info a {
+  color: #1f5f8f;
+}
+
+.tum-login-form {
+  max-width: 460px;
+}
+
+.tum-form-element-wrapper {
+  margin-bottom: 1rem;
+}
+
+.tum-form-element-wrapper label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.95rem;
+}
+
+.tum-form-field {
+  width: 100%;
+  height: 2.4rem;
+  border: 1px solid #b9c8d6;
+  border-radius: 2px;
+  padding: 0 0.6rem;
+  font-size: 0.95rem;
+}
+
+.tum-form-field:focus-visible {
+  outline: 2px solid rgba(0, 101, 189, 0.35);
+  outline-offset: 1px;
+}
+
+.tum-checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+}
+
+.tum-checkbox-row label {
+  margin-bottom: 0;
+}
+
+.tum-login-btn-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.tum-btn-login {
+  height: 2.45rem;
+  min-width: 120px;
+  border: 0;
+  border-radius: 0;
+  background: #0074c8;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.tum-btn-login:hover {
+  background: #005ea2;
+}
+
+.tum-forgot-password {
+  color: #1f5f8f;
+  text-decoration: none;
+}
+
+.tum-forgot-password:hover {
+  text-decoration: underline;
+}
+
+.tum-explanation {
+  border-top: 1px solid #dce4ed;
+  padding: 1rem;
+  color: #334b5f;
+  font-size: 0.94rem;
+  background: #f8fbfd;
+}
+
+.tum-explanation p {
+  margin: 0.7rem 0;
+}
+
+.tum-explanation ul {
+  margin: 0.4rem 0 0.75rem 1.1rem;
+}
+
+.tum-login-footer {
+  border-top: 1px solid #dce4ed;
+  background: #f4f7fa;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+}
+
+.tum-login-footer a {
+  color: #2c587e;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.tum-login-footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .tum-login-shell {
+    padding: 0.55rem;
+  }
+
+  .tum-login-content h1 {
+    font-size: 1.65rem;
+  }
+
+  .tum-login-btn-wrapper {
+    align-items: stretch;
+  }
+
+  .tum-btn-login {
+    width: 100%;
+  }
 }
 
 .ttt-reset {
@@ -483,6 +730,12 @@ body::after {
   font-size: 0.72rem;
   font-weight: 700;
   color: #12575e;
+  text-decoration: none;
+}
+
+.home-avatar:focus-visible {
+  outline: 2px solid rgba(9, 91, 98, 0.45);
+  outline-offset: 2px;
 }
 
 .home-grid {
