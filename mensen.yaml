@@ -1,0 +1,508 @@
+studierendenwerk_muenchen_oberbayern:
+  organisation:
+    name: "Studierendenwerk München Oberbayern"
+    rechtsform: "Anstalt des öffentlichen Rechts"
+    adresse: "Leopoldstraße 15, 80802 München"
+    telefon: "+49 89 38196-0"
+    fax: "+49 89 38196-144"
+    email: "stuwerk@stwm.de"
+    u_bahn: "U3 / U6 Giselastraße"
+
+  standorte:
+
+    - name: "Mensa Leopoldstraße"
+      typ: "Mensa"
+      adresse: "Leopoldstr. 13a, 80802 München"
+      koordinaten:
+        latitude: 48.1563276
+        longitude: 11.5825201
+      oeffnungszeiten:
+        vorlesungszeit:
+          mo_do: "11:00 - 14:30"
+          fr: "11:00 - 14:00"
+        vorlesungsfreie_zeit:
+          mo_fr: "11:00 - 14:00"
+      infopoint:
+        vorlesungszeit:
+          mo_do: "11:00 - 14:30"
+          fr: "11:00 - 14:00"
+      bezahlart:
+        - "Legic-Karte"
+        - "EC-Karte"
+      schlieszeiten:
+        - zeitraum: "24.12.2026 - 06.01.2027"
+          grund: "Weihnachten / Neujahr"
+      speiseplan: true
+
+    - name: "StuCafé Leopoldstraße"
+      typ: "StuCafé"
+      hinweis: "Erstes Betrieb mit rein vegan/vegetarischem Angebot"
+      adresse: "Leopoldstr. 13a, 80802 München"
+      koordinaten:
+        latitude: 48.1563276
+        longitude: 11.5825201
+      oeffnungszeiten:
+        vorlesungszeit:
+          mo_do: "09:00 - 15:00"
+          fr: "09:00 - 14:00"
+        vorlesungsfreie_zeit:
+          mo_fr: "09:00 - 14:00"
+      bezahlart:
+        - "Legic-Karte"
+        - "EC-Karte"
+      schlieszeiten:
+        - zeitraum: "16.02.2025 - 17.02.2026"
+          grund: "Fasching"
+        - zeitraum: "02.04. - 07.04.2026"
+          grund: "Ostern"
+        - zeitraum: "15.05.2026"
+          grund: "Christi Himmelfahrt"
+        - zeitraum: "22.05. - 26.05.2026"
+          grund: "Pfingsten"
+        - zeitraum: "05.06.2026"
+          grund: "Fronleichnam"
+        - zeitraum: "20.07. - 25.09.2026"
+          grund: "Sommerschließung"
+        - zeitraum: "24.12.2026 - 06.01.2027"
+          grund: "Weihnachten / Neujahr"
+
+    - name: "StuLounge Leopoldstraße"
+      typ: "StuLounge"
+      adresse: "Leopoldstr. 13a, 80802 München"
+      koordinaten:
+        latitude: 48.1563276
+        longitude: 11.5825201
+      oeffnungszeiten:
+        vorlesungszeit:
+          mo_do: "09:00 - 15:00"
+          fr: "09:00 - 14:00"
+        vorlesungsfreie_zeit:
+          mo_fr: "09:00 - 14:00"
+      bezahlart:
+        - "Legic-Karte"
+        - "EC-Karte"
+      schlieszeiten:
+        - zeitraum: "24.12.2026 - 06.01.2027"
+          grund: "Weihnachten / Neujahr"
+
+    - name: "StuBistroMensa Oettingenstraße"
+      typ: "StuBistroMensa"
+      adresse: "Oettingenstraße 67, 80538 München"
+      koordinaten:
+        latitude: 48.1496276
+        longitude: 11.5943078
+      oeffnungszeiten:
+        vorlesungszeit:
+          mo_do: "09:00 - 15:00"
+          fr: "10:00 - 14:00"
+        essensausgabe:
+          mo_do: "11:00 - 14:30"
+          fr: "11:00 - 13:30"
+        vorlesungsfreie_zeit:
+          mo_fr: "11:00 - 14:00"
+      bezahlart:
+        - "Legic-Karte"
+      schlieszeiten:
+        - zeitraum: "bis 25.05.2026"
+          grund: "Bauliche Maßnahmen"
+        - zeitraum: "15.05.2026"
+          grund: "Christi Himmelfahrt"
+        - zeitraum: "05.06.2026"
+          grund: "Fronleichnam"
+        - zeitraum: "24.12.2026 - 06.01.2027"
+          grund: "Weihnachten / Neujahr"
+      speiseplan: true
+
+    - name: "StuBistroMensa Adalbertstraße"
+      typ: "StuBistroMensa"
+      hinweis: "Schönste Terrasse im Stadtviertel, Innen- und Außenbereich"
+      adresse: "Adalbertstr. 5, 80799 München"
+      koordinaten:
+        latitude: 48.1526196
+        longitude: 11.5765663
+      oeffnungszeiten:
+        vorlesungszeit:
+          mo_do: "09:00 - 15:00"
+          fr: "09:00 - 14:00"
+        essensausgabe:
+          mo_do: "11:00 - 14:30"
+          fr: "11:00 - 14:00"
+        vorlesungsfreie_zeit:
+          mo_do: "09:00 - 14:30"
+          fr: "09:00 - 14:00"
+        essensausgabe_vorlesungsfreie_zeit:
+          mo_fr: "11:00 - 14:00"
+      bezahlart:
+        - "Legic-Karte"
+      schlieszeiten:
+        - zeitraum: "16.02. - 17.02.2026"
+          grund: "Fasching"
+        - zeitraum: "02.04. - 07.04.2026"
+          grund: "Ostern"
+        - zeitraum: "15.05.2026"
+          grund: "Christi Himmelfahrt"
+        - zeitraum: "22.05. - 26.05.2026"
+          grund: "Pfingsten"
+        - zeitraum: "05.06.2026"
+          grund: "Fronleichnam"
+        - zeitraum: "24.12.2026 - 06.01.2027"
+          grund: "Weihnachten / Neujahr"
+      speiseplan: true
+
+    - name: "Espressobar Ludwigstraße"
+      typ: "Espressobar"
+      adresse: "Ludwigstr. 28, 80539 München"
+      koordinaten:
+        latitude: 48.1460
+        longitude: 11.5790
+      oeffnungszeiten:
+        regulaer:
+          mo_sa: "09:00 - 18:00"
+      hinweis: "Abweichende Öffnungszeiten in der vorlesungsfreien Zeit möglich"
+      bezahlart:
+        - "Legic-Karte"
+      schlieszeiten:
+        - zeitraum: "24.12.2026 - 06.01.2027"
+          grund: "Weihnachten / Neujahr"
+
+    - name: "StuBistroMensa Akademiestraße"
+      typ: "StuBistroMensa"
+      adresse: "Akademiestraße 2-4, 80799 München"
+      koordinaten:
+        latitude: 48.14925
+        longitude: 11.57946
+      oeffnungszeiten:
+        waehrend_umbau:
+          mo_do: "11:00 - 14:00"
+        vorlesungszeit:
+          mo_do: "09:00 - 14:30"
+          fr: "09:00 - 14:00"
+        essensausgabe:
+          mo_do: "11:00 - 14:30"
+          fr: "11:00 - 14:00"
+        vorlesungsfreie_zeit:
+          mo_fr: "09:00 - 14:00"
+        essensausgabe_vorlesungsfreie_zeit:
+          mo_fr: "11:00 - 14:00"
+      bezahlart:
+        - "Legic-Karte"
+      schlieszeiten:
+        - zeitraum: "02.04. - 07.04.2026"
+          grund: "Ostern"
+        - zeitraum: "15.05.2026"
+          grund: "Christi Himmelfahrt"
+        - zeitraum: "22.05. - 26.05.2026"
+          grund: "Pfingsten"
+        - zeitraum: "05.06.2026"
+          grund: "Fronleichnam"
+        - zeitraum: "03.08. - 25.09.2026"
+          grund: "Sommerschließung"
+        - zeitraum: "24.12.2026 - 06.01.2027"
+          grund: "Weihnachten / Neujahr"
+      speiseplan: true
+
+    - name: "StuBistroMensa Schellingstraße"
+      typ: "StuBistroMensa"
+      adresse: "Schellingstr. 3, 80799 München"
+      koordinaten:
+        latitude: 48.1505
+        longitude: 11.5748
+      oeffnungszeiten:
+        vorlesungszeit:
+          mo_do: "09:00 - 15:00"
+          fr: "10:00 - 14:00"
+        essensausgabe:
+          mo_do: "11:00 - 14:30"
+          fr: "11:00 - 14:00"
+        vorlesungsfreie_zeit:
+          mo_do: "09:00 - 14:30"
+          fr: "10:00 - 14:00"
+      bezahlart:
+        - "Legic-Karte"
+      schlieszeiten:
+        - zeitraum: "15.05.2026"
+          grund: "Christi Himmelfahrt"
+        - zeitraum: "05.06.2026"
+          grund: "Fronleichnam"
+        - zeitraum: "20.07. - 25.09.2026"
+          grund: "Sommerschließung"
+        - zeitraum: "24.12.2026 - 06.01.2027"
+          grund: "Weihnachten / Neujahr"
+      speiseplan: true
+
+    - name: "StuBistroMensa Schillerstraße"
+      typ: "StuBistroMensa"
+      adresse: "Schillerstr. 47, 80336 München"
+      koordinaten:
+        latitude: 48.138993
+        longitude: 11.561303
+      status: "VORÜBERGEHEND GESCHLOSSEN"
+      hinweis: "Bitte StuBistroMensa Goethestraße besuchen"
+      oeffnungszeiten:
+        regulaer:
+          mo_fr: "11:00 - 14:00"
+      bezahlart:
+        - "Legic-Karte"
+
+    - name: "StuBistroMensa Goethestraße"
+      typ: "StuBistroMensa"
+      adresse: "Goethestr. 70, 80336 München"
+      koordinaten:
+        latitude: 48.137154
+        longitude: 11.576124
+      oeffnungszeiten:
+        vorlesungszeit:
+          mo_do: "09:00 - 14:30"
+          fr: "10:00 - 14:00"
+        essensausgabe:
+          mo_do: "11:00 - 14:00"
+          fr: "11:00 - 14:00"
+      bezahlart:
+        - "Legic-Karte"
+      schlieszeiten:
+        - zeitraum: "16.02. - 17.02.2026"
+          grund: "Fasching"
+        - zeitraum: "02.04. - 07.04.2026"
+          grund: "Ostern"
+        - zeitraum: "15.05.2026"
+          grund: "Christi Himmelfahrt"
+        - zeitraum: "22.05. - 26.05.2026"
+          grund: "Pfingsten"
+        - zeitraum: "05.06.2026"
+          grund: "Fronleichnam"
+        - zeitraum: "10.08. - 25.09.2026"
+          grund: "Sommerschließung"
+        - zeitraum: "24.12.2026 - 06.01.2027"
+          grund: "Weihnachten / Neujahr"
+      speiseplan: true
+
+    - name: "Mensa Arcisstraße"
+      typ: "Mensa"
+      adresse: "Arcisstr. 17, 80333 München"
+      koordinaten:
+        latitude: 48.1486
+        longitude: 11.5676
+      oeffnungszeiten:
+        vorlesungszeit:
+          mo_do: "11:00 - 14:30"
+          fr: "11:00 - 14:00"
+        vorlesungsfreie_zeit:
+          mo_fr: "11:00 - 14:00"
+      infopoint:
+        mo_do: "11:00 - 14:00"
+        fr: "11:00 - 13:30"
+      bezahlart:
+        - "Legic-Karte"
+        - "EC-Karte"
+      schlieszeiten:
+        - zeitraum: "24.12.2026 - 06.01.2027"
+          grund: "Weihnachten / Neujahr"
+      speiseplan: true
+
+    - name: "StuLounge Arcisstraße"
+      typ: "StuLounge"
+      adresse: "Arcisstr. 17, 80333 München"
+      koordinaten:
+        latitude: 48.1486
+        longitude: 11.5676
+      oeffnungszeiten:
+        vorlesungszeit:
+          mo_do: "09:00 - 15:30"
+          fr: "09:00 - 15:00"
+      bezahlart:
+        - "Legic-Karte"
+        - "EC-Karte"
+      schlieszeiten:
+        - zeitraum: "02.04. - 07.04.2026"
+          grund: "Ostern"
+        - zeitraum: "15.05.2026"
+          grund: "Christi Himmelfahrt"
+        - zeitraum: "22.05. - 26.05.2026"
+          grund: "Pfingsten"
+        - zeitraum: "05.06.2026"
+          grund: "Fronleichnam"
+        - zeitraum: "27.07. - 14.08.2026"
+          grund: "Sommerschließung"
+        - zeitraum: "24.12.2026 - 06.01.2027"
+          grund: "Weihnachten / Neujahr"
+
+    - name: "StuBistroMensa Arcisstraße"
+      typ: "StuBistroMensa"
+      adresse: "Arcisstr. 12, 80333 München"
+      koordinaten:
+        latitude: 48.1486
+        longitude: 11.5676
+      oeffnungszeiten:
+        regulaer:
+          mo_fr: "08:30 - 15:00"
+      bezahlart:
+        - "Legic-Karte"
+      schlieszeiten:
+        - zeitraum: "16.02. - 17.02.2026"
+          grund: "Fasching"
+        - zeitraum: "02.04. - 07.04.2026"
+          grund: "Ostern"
+        - zeitraum: "15.05.2026"
+          grund: "Christi Himmelfahrt"
+        - zeitraum: "22.05. - 26.05.2026"
+          grund: "Pfingsten"
+        - zeitraum: "05.06.2026"
+          grund: "Fronleichnam"
+        - zeitraum: "27.07. - 28.08.2026"
+          grund: "Sommerschließung"
+        - zeitraum: "24.12.2026 - 06.01.2027"
+          grund: "Weihnachten / Neujahr"
+      speiseplan: true
+
+    - name: "StuCafé Arcisstraße"
+      typ: "StuCafé"
+      adresse: "Arcisstr. 21, 80333 München"
+      koordinaten:
+        latitude: 48.1486
+        longitude: 11.5676
+      oeffnungszeiten:
+        vorlesungszeit:
+          mo_do: "08:00 - 16:00"
+          fr: "08:00 - 15:00"
+        vorlesungsfreie_zeit:
+          mo_fr: "09:00 - 15:00"
+      bezahlart:
+        - "Legic-Karte"
+      schlieszeiten:
+        - zeitraum: "24.12.2026 - 06.01.2027"
+          grund: "Weihnachten / Neujahr"
+
+    - name: "StuBistroMensa Bernd-Eichinger-Platz"
+      typ: "StuBistroMensa"
+      adresse: "Bernd-Eichinger-Platz 1, 80333 München"
+      koordinaten:
+        latitude: 48.1486
+        longitude: 11.5676
+      oeffnungszeiten:
+        regulaer:
+          mo_do: "08:30 - 16:00"
+          fr: "08:30 - 15:00"
+      infopoint:
+        standort: "Mensa Arcisstraße 17"
+        mo_do: "11:00 - 14:00"
+        fr: "11:00 - 13:30"
+      bezahlart:
+        - "Legic-Karte"
+      schlieszeiten:
+        - zeitraum: "03.08. - 04.09.2026"
+          grund: "Sommerschließung"
+        - zeitraum: "24.12.2026 - 06.01.2027"
+          grund: "Weihnachten / Neujahr"
+      speiseplan: true
+
+    - name: "StuBistroMensa am Olympiacampus"
+      typ: "StuBistroMensa"
+      adresse: "Am Olympiacampus 11, 80809 München"
+      koordinaten:
+        latitude: 48.1774
+        longitude: 11.5462
+      oeffnungszeiten:
+        vorlesungszeit:
+          mo_do: "11:00 - 15:00"
+          fr: "11:00 - 14:00"
+        vorlesungsfreie_zeit:
+          mo_fr: "11:00 - 14:00"
+      stulounge:
+        vorlesungszeit:
+          mo_do: "09:00 - 16:15"
+          fr: "09:00 - 15:15"
+        vorlesungsfreie_zeit:
+          mo_fr: "10:30 - 14:00"
+      bezahlart:
+        - "Legic-Karte"
+      schlieszeiten:
+        - zeitraum: "17.02.2026"
+          grund: "Fasching"
+        - zeitraum: "02.04. - 17.04.2026"
+          grund: "Ostern"
+        - zeitraum: "26.05.2026"
+          grund: "Pfingsten"
+        - zeitraum: "23.12.2026 - 06.01.2027"
+          grund: "Weihnachten / Neujahr"
+      speiseplan: true
+
+    - name: "Mensa Lothstraße"
+      typ: "Mensa"
+      adresse: "Lothstr. 13d, 80335 München"
+      koordinaten:
+        latitude: 48.1468
+        longitude: 11.5537
+      oeffnungszeiten:
+        vorlesungszeit:
+          mo_do: "11:00 - 14:30"
+          fr: "11:00 - 14:00"
+      infopoint:
+        mo_fr: "11:00 - 13:30"
+      bezahlart:
+        - "Legic-Karte"
+      schlieszeiten:
+        - zeitraum: "09.02. - 13.03.2026"
+          grund: "Frühjahrsschließung"
+        - zeitraum: "20.07. - 30.09.2026"
+          grund: "Sommerschließung"
+        - zeitraum: "23.12.2026 - 06.01.2027"
+          grund: "Weihnachten / Neujahr"
+      speiseplan: true
+
+    - name: "StuCafé Lothstraße"
+      typ: "StuCafé"
+      adresse: "Lothstr. 64, 80335 München"
+      koordinaten:
+        latitude: 48.1468
+        longitude: 11.5537
+      oeffnungszeiten:
+        vorlesungszeit:
+          mo_do: "09:00 - 15:00"
+          fr: "09:00 - 14:00"
+        semesterferien:
+          mo_fr: "10:00 - 14:00"
+      bezahlart:
+        - "Legic-Karte"
+      schlieszeiten:
+        - zeitraum: "16.02. - 13.03.2026"
+          grund: "Frühjahrsschließung"
+        - zeitraum: "02.04. - 07.04.2026"
+          grund: "Ostern"
+        - zeitraum: "15.05.2026"
+          grund: "Christi Himmelfahrt"
+        - zeitraum: "22.05. - 26.05.2026"
+          grund: "Pfingsten"
+        - zeitraum: "05.06.2026"
+          grund: "Fronleichnam"
+        - zeitraum: "03.08. - 18.09.2026"
+          grund: "Sommerschließung"
+        - zeitraum: "23.12.2026 - 06.01.2027"
+          grund: "Weihnachten / Neujahr"
+
+    - name: "StuBistroMensa Karlstraße"
+      typ: "StuBistroMensa"
+      adresse: "Karlstr. 6, 80333 München"
+      koordinaten:
+        latitude: 48.1441
+        longitude: 11.5602
+      oeffnungszeiten:
+        regulaer:
+          mo_fr: "08:15 - 15:00"
+      bezahlart:
+        - "Legic-Karte"
+      schlieszeiten:
+        - zeitraum: "09.02. - 13.03.2026"
+          grund: "Frühjahrsschließung"
+        - zeitraum: "02.04. - 07.04.2026"
+          grund: "Ostern"
+        - zeitraum: "15.05.2026"
+          grund: "Christi Himmelfahrt"
+        - zeitraum: "22.05. - 26.05.2026"
+          grund: "Pfingsten"
+        - zeitraum: "05.06.2026"
+          grund: "Fronleichnam"
+        - zeitraum: "27.07. - 30.09.2026"
+          grund: "Sommerschließung"
+        - zeitraum: "23.12.2026 - 06.01.2027"
+          grund: "Weihnachten / Neujahr"
+      speiseplan: true

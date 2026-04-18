@@ -707,6 +707,10 @@ body.loginPage::after {
   gap: 0.55rem;
 }
 
+.home-profile-menu {
+  position: relative;
+}
+
 .home-search-icon {
   width: 2rem;
   height: 2rem;
@@ -731,11 +735,89 @@ body.loginPage::after {
   font-weight: 700;
   color: #12575e;
   text-decoration: none;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.home-avatar-large {
+  width: 2.9rem;
+  height: 2.9rem;
+  border: 2px solid rgba(14, 98, 104, 0.32);
+  box-shadow: 0 8px 20px rgba(6, 64, 70, 0.22);
+}
+
+.home-profile-menu:hover .home-avatar,
+.home-profile-menu:focus-within .home-avatar {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(6, 64, 70, 0.28);
 }
 
 .home-avatar:focus-visible {
   outline: 2px solid rgba(9, 91, 98, 0.45);
   outline-offset: 2px;
+}
+
+.home-avatar-image {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+}
+
+.home-profile-popover {
+  position: absolute;
+  top: calc(100% + 0.45rem);
+  right: 0;
+  width: 190px;
+  border-radius: 14px;
+  border: 1px solid rgba(7, 91, 97, 0.24);
+  background: rgba(250, 255, 255, 0.97);
+  box-shadow: 0 16px 30px rgba(3, 36, 40, 0.2);
+  padding: 0.55rem;
+  display: grid;
+  gap: 0.2rem;
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 20;
+}
+
+.home-profile-menu:hover .home-profile-popover,
+.home-profile-menu:focus-within .home-profile-popover {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.home-profile-title {
+  margin: 0.1rem 0 0.35rem;
+  padding: 0 0.35rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(11, 74, 80, 0.72);
+}
+
+.home-profile-item {
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 0.45rem 0.5rem;
+  color: #14464d;
+  text-decoration: none;
+  font-size: 0.86rem;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.home-profile-item:hover,
+.home-profile-item:focus-visible {
+  background: #eafffd;
+  border-color: rgba(8, 93, 99, 0.2);
+  outline: none;
+}
+
+.home-profile-item-danger {
+  color: #a42c2c;
 }
 
 .home-grid {
