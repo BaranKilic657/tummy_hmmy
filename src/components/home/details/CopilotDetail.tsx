@@ -2,10 +2,11 @@
 
 import { FormEvent } from "react";
 
+import { ChatDebugPanel } from "../copilot/ChatDebugPanel";
 import { useCopilotChat } from "../copilot/useCopilotChat";
 
 export function CopilotDetail() {
-  const { messages, input, setInput, isLoading, error, sendCurrentInput } = useCopilotChat();
+  const { messages, input, setInput, isLoading, error, debug, clearChat, sendCurrentInput } = useCopilotChat();
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -15,6 +16,12 @@ export function CopilotDetail() {
   return (
     <section className="copilot-detail copilot-chat-detail">
       <p className="detail-subtitle">Full chat history</p>
+
+      <div className="chat-toolbar">
+        <button type="button" className="chat-secondary-btn" onClick={clearChat} disabled={isLoading}>
+          Clear Chat
+        </button>
+      </div>
 
       <div className="chat-messages copilot-detail-messages" aria-live="polite">
         {messages.map((message, index) => (
@@ -39,6 +46,8 @@ export function CopilotDetail() {
       </form>
 
       {error ? <p className="chat-error">{error}</p> : null}
+
+      <ChatDebugPanel debug={debug} />
     </section>
   );
 }

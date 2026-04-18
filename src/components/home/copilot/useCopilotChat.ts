@@ -9,6 +9,12 @@ type ChatMessage = {
   content: string;
 };
 
+type ChatDebugPayload = {
+  apiRequest?: unknown;
+  cognee?: unknown;
+  llm?: unknown;
+};
+
 type CalendarAddAction = {
   day: "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday";
   startTime: string;
@@ -24,10 +30,12 @@ const INITIAL_MESSAGES: ChatMessage[] = [
 ];
 
 export function useCopilotChat() {
+  const debugEnabled = isLocalhostClient();
   const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [debug, setDebug] = useState<ChatDebugPayload | null>(null);
 
   useEffect(() => {
     setMessages(loadMessagesFromStorage());
@@ -67,19 +75,27 @@ export function useCopilotChat() {
     setIsLoading(true);
 
     try {
+      const requestPayload = {
+        messages: nextMessages,
+        calendarEvents: getCustomCalendarEntries(),
+      };
+
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: nextMessages,
-          calendarEvents: getCustomCalendarEntries(),
-        }),
+        body: JSON.stringify(requestPayload),
       });
 
-      const data = (await response.json()) as { error?: string; reply?: string };
+      const data = (await response.json()) as { error?: string; reply?: string; debug?: ChatDebugPayload };
 
       if (!response.ok) {
         throw new Error(typeof data.error === "string" ? data.error : "Chat request failed.");
+      }
+
+      const debugPayload = debugEnabled ? data.debug ?? null : null;
+      setDebug(debugPayload);
+      if (debugPayload) {
+        logDebugToConsole(debugPayload, normalizedText);
       }
 
       if (!data.reply) {
@@ -115,15 +131,47 @@ export function useCopilotChat() {
     }
   }
 
+  function clearChat() {
+    persistMessages(INITIAL_MESSAGES);
+    setMessages(INITIAL_MESSAGES);
+    setInput("");
+    setError("");
+    setDebug(null);
+  }
+
   return {
     messages,
     input,
     setInput,
     isLoading,
     error,
+    debug,
+    clearChat,
     sendCurrentInput,
     latestAssistantMessage,
   };
+}
+
+function logDebugToConsole(debugPayload: ChatDebugPayload, prompt: string) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  const title = prompt.length > 70 ? `${prompt.slice(0, 67)}...` : prompt;
+  console.groupCollapsed(`[TUMmy Debug] ${title}`);
+  console.log("Client Request", debugPayload.apiRequest);
+  console.log("Cognee", debugPayload.cognee);
+  console.log("LLM", debugPayload.llm);
+  console.groupEnd();
+}
+
+function isLocalhostClient(): boolean {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  const host = window.location.hostname;
+  return host === "localhost" || host === "127.0.0.1" || host === "::1";
 }
 
 function loadMessagesFromStorage() {

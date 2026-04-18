@@ -652,6 +652,112 @@ body.loginPage::after {
   font-size: 0.92rem;
 }
 
+.chat-toolbar {
+  margin-top: 0.45rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.chat-secondary-btn {
+  height: 2rem;
+  padding: 0 0.72rem;
+  border-radius: 10px;
+  border: 1px solid rgba(8, 92, 99, 0.26);
+  background: rgba(241, 253, 254, 0.9);
+  color: #0d535a;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.chat-secondary-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.chat-debug-panel {
+  margin-top: 0.7rem;
+  border: 1px solid rgba(11, 82, 88, 0.22);
+  border-radius: 12px;
+  background: rgba(246, 255, 255, 0.9);
+  padding: 0.5rem 0.6rem;
+}
+
+.chat-debug-panel-active {
+  border-color: rgba(10, 91, 98, 0.36);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+
+.chat-debug-panel summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: #0a4f55;
+}
+
+.chat-debug-meta {
+  margin-top: 0.45rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem;
+}
+
+.chat-debug-meta span {
+  border-radius: 999px;
+  border: 1px solid rgba(11, 86, 92, 0.24);
+  background: rgba(255, 255, 255, 0.76);
+  padding: 0.2rem 0.54rem;
+  font-size: 0.72rem;
+  color: #0b4c53;
+}
+
+.chat-debug-empty {
+  margin: 0.5rem 0 0;
+  color: #33646b;
+  font-size: 0.88rem;
+}
+
+.chat-debug-grid {
+  margin-top: 0.55rem;
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.chat-debug-section {
+  margin-top: 0;
+  border: 1px solid rgba(11, 84, 89, 0.2);
+  border-radius: 10px;
+  background: rgba(254, 255, 255, 0.95);
+  padding: 0.45rem;
+}
+
+.chat-debug-section h4 {
+  margin: 0 0 0.3rem;
+  font-size: 0.78rem;
+  color: #0c4a50;
+  letter-spacing: 0.01em;
+}
+
+.chat-debug-section pre {
+  margin: 0;
+  padding: 0.58rem;
+  border-radius: 8px;
+  max-height: 360px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #f0fbfc;
+  border: 1px solid rgba(9, 81, 86, 0.2);
+  color: #083035;
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+
+@media (min-width: 1000px) {
+  .chat-debug-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 .home-screen {
   display: grid;
   place-items: center;
