@@ -74,6 +74,7 @@ export function CopilotTile() {
 
   return (
     <article className="widget widget-copilot">
+<<<<<<< HEAD
       <h2>Campus Finder</h2>
       <p>Live-Suche über NavigaTUM für Gebäude, Räume und Campus-Orte.</p>
 
@@ -86,6 +87,13 @@ export function CopilotTile() {
           aria-label="Campus-Suche"
         />
         <button type="submit" aria-label="Suche starten">
+=======
+      <h2>UNI Copilot</h2>
+      <p>Ask about deadlines, rooms, tasks, or your study plan.</p>
+      <div className="copilot-input">
+        <span>Ask your copilot...</span>
+        <button type="button" aria-label="Send">
+>>>>>>> fa1b31f68acf4be888a262e17695f542f304ab16
           →
         </button>
       </form>

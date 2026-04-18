@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import type { PublicMensaPayload } from "@/lib/public-campus-types";
 
+<<<<<<< HEAD
 const LABEL_BADGES: Array<{ match: string; emoji: string; label: string }> = [
   { match: "VEGAN", emoji: "🌱", label: "vegan" },
   { match: "VEGETARIAN", emoji: "🥕", label: "vegetarisch" },
@@ -91,6 +92,43 @@ export function MensaTile() {
           </span>
         </>
       ) : null}
+=======
+const TAG_LABELS: Record<MensaTag, string> = {
+  vegan: "vegan",
+  vegetarisch: "vegetarian",
+  schwein: "contains pork",
+  gluten: "contains gluten",
+  laktose: "contains lactose",
+  nuesse: "contains nuts",
+};
+
+export function MensaTile() {
+  const { dayName, dishes } = useMemo(() => getTodayMensaMenu(), []);
+
+  return (
+    <article className="widget widget-mensa">
+      <h2>Cafeteria</h2>
+      <p>Today ({dayName})</p>
+
+      <ul className="mensa-list" aria-label="Today's cafeteria meals">
+        {dishes.length > 0 ? (
+          dishes.map((dish) => (
+            <li key={dish.name} className="mensa-item">
+              <span>{dish.name}</span>
+              <span className="mensa-tags" aria-label="Dietary tags">
+                {dish.tags.map((tag) => (
+                  <span key={`${dish.name}-${tag}`} title={TAG_LABELS[tag]} aria-label={TAG_LABELS[tag]}>
+                    {TAG_EMOJIS[tag]}
+                  </span>
+                ))}
+              </span>
+            </li>
+          ))
+        ) : (
+          <li className="mensa-item">The cafeteria is closed on weekends.</li>
+        )}
+      </ul>
+>>>>>>> fa1b31f68acf4be888a262e17695f542f304ab16
     </article>
   );
 }

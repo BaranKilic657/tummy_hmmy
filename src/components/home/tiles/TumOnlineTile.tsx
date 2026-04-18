@@ -49,6 +49,7 @@ export function TumOnlineTile() {
   return (
     <article className="widget">
       <h2>TUMonline</h2>
+<<<<<<< HEAD
       <p>
         {rooms
           ? `Öffentliche Raumdaten für ${rooms.campusName}`
@@ -86,6 +87,9 @@ export function TumOnlineTile() {
           <span className="widget-chip">{rooms.totalCount} öffentliche Lehr-Räume</span>
         </>
       ) : null}
+=======
+      <p>Enrollment, grades status, and study information.</p>
+>>>>>>> fa1b31f68acf4be888a262e17695f542f304ab16
     </article>
   );
 }

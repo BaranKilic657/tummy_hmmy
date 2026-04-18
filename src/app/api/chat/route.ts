@@ -35,7 +35,7 @@ function normalizeMessages(inputMessages: ChatMessage[]): BedrockMessage[] {
 
 function extractErrorMessage(data: unknown): string {
   if (!data || typeof data !== "object") {
-    return "Bedrock Anfrage fehlgeschlagen.";
+    return "Bedrock request failed.";
   }
 
   const record = data as Record<string, unknown>;
@@ -52,7 +52,7 @@ function extractErrorMessage(data: unknown): string {
     return record.__type;
   }
 
-  return "Bedrock Anfrage fehlgeschlagen.";
+  return "Bedrock request failed.";
 }
 
 async function callWithBearerToken(
@@ -103,7 +103,7 @@ async function callWithBearerToken(
     return {
       ok: false as const,
       status: 502,
-      error: "Die API hat keine Textantwort geliefert.",
+      error: "The API did not return a text response.",
       details: data,
     };
   }
@@ -125,7 +125,7 @@ async function callWithAwsCredentials(messages: BedrockMessage[], region: string
     return {
       ok: false as const,
       status: 502,
-      error: "Die API hat keine Textantwort geliefert.",
+      error: "The API did not return a text response.",
       details: output,
     };
   }
@@ -143,7 +143,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           error:
-            "BEDROCK_API_KEY (oder AWS_BEARER_TOKEN) fehlt. Alternativ kannst du AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY setzen.",
+            "BEDROCK_API_KEY (or AWS_BEARER_TOKEN) is missing. Alternatively set AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY.",
         },
         { status: 500 },
       );
@@ -154,7 +154,7 @@ export async function POST(request: Request) {
     const normalized = normalizeMessages(inputMessages);
 
     if (normalized.length === 0) {
-      return NextResponse.json({ error: "Keine Nachricht gesendet." }, { status: 400 });
+      return NextResponse.json({ error: "No message was sent." }, { status: 400 });
     }
 
     const result = bearerToken
@@ -170,7 +170,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ reply: result.reply });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unbekannter Fehler";
+    const message = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

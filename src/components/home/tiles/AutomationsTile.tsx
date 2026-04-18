@@ -3,27 +3,27 @@
 const AUTOMATION_TILES = [
   {
     title: "Time based",
-    description: "Starte Aktionen zu festen Zeiten oder Intervallen.",
+    description: "Start actions at fixed times or intervals.",
   },
   {
     title: "Location based",
-    description: "Führe Workflows aus, sobald du am Campus ankommst.",
+    description: "Run workflows as soon as you arrive on campus.",
   },
   {
     title: "Moodle event based",
-    description: "Reagiere automatisch auf neue Aufgaben und Deadlines.",
+    description: "React automatically to new tasks and deadlines.",
   },
   {
     title: "Custom",
-    description: "Erstelle eigene Regeln mit Bedingungen und Aktionen.",
+    description: "Create your own rules with conditions and actions.",
   },
 ];
 
 export function AutomationsTile() {
   return (
     <article className="widget widget-wide">
-      <h2>Automations</h2>
-      <p>Vorgefertigte Trigger als GUI-Vorschau.</p>
+      <h2>Automation</h2>
+      <p>Prebuilt triggers as a GUI preview.</p>
       <div className="automation-grid" aria-label="Automation types">
         {AUTOMATION_TILES.map((tile) => (
           <div key={tile.title} className="automation-tile">

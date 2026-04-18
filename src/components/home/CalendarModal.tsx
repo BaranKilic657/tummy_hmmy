@@ -14,16 +14,16 @@ export function CalendarModal({ isOpen, onClose }: CalendarModalProps) {
         type="button"
         className="calendar-backdrop"
         onClick={onClose}
-        aria-label="Kalender schließen"
+        aria-label="Close calendar"
       />
-      <section className="calendar-modal" aria-label="Wochenkalender">
+      <section className="calendar-modal" aria-label="Weekly calendar">
         <header className="calendar-modal-head">
           <div>
-            <h3>Wochenplan Elektrotechnik</h3>
-            <p>Dummy-Daten, nur UI-Vorschau</p>
+            <h3>Weekly electrical engineering schedule</h3>
+            <p>Dummy data, UI preview only</p>
           </div>
           <button type="button" onClick={onClose}>
-            Schließen
+            Close
           </button>
         </header>
 

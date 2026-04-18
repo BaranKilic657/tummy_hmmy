@@ -32,10 +32,10 @@ export default function TicTacToePage() {
   const isDraw = useMemo(() => !winner && board.every((cell) => cell !== null), [board, winner]);
 
   const status = winner
-    ? `Gewinner: ${winner}`
+    ? `Winner: ${winner}`
     : isDraw
-      ? "Unentschieden"
-      : `Am Zug: ${turn}`;
+      ? "Draw"
+      : `Current turn: ${turn}`;
 
   const handleClick = (index: number) => {
     if (board[index] || winner) {
@@ -59,14 +59,14 @@ export default function TicTacToePage() {
         <h1>Tic-Tac-Toe</h1>
         <p className="ttt-status">{status}</p>
 
-        <div className="ttt-grid" role="grid" aria-label="Tic-Tac-Toe Spielfeld">
+        <div className="ttt-grid" role="grid" aria-label="Tic-Tac-Toe board">
           {board.map((cell, index) => (
             <button
               key={index}
               type="button"
               className="ttt-cell"
               onClick={() => handleClick(index)}
-              aria-label={`Feld ${index + 1}`}
+              aria-label={`Cell ${index + 1}`}
             >
               {cell}
             </button>
@@ -74,7 +74,7 @@ export default function TicTacToePage() {
         </div>
 
         <button type="button" className="ttt-reset" onClick={reset}>
-          Neu starten
+          Restart
         </button>
       </section>
     </main>
