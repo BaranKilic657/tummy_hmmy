@@ -94,3 +94,33 @@ export type PublicNavigatumRoutePayload = {
   routeCosting: string;
   result: unknown;
 };
+
+export type PublicTransitDeparture = {
+  line: string;
+  transportType: string;
+  destination: string;
+  plannedDepartureTime: string;
+  realtimeDepartureTime: string;
+  realtime: boolean;
+  cancelled: boolean;
+  platform: string | null;
+  platformChanged: boolean;
+  occupancy: string | null;
+  messages: string[];
+};
+
+export type PublicTransitPayload = {
+  source: "mvg-api";
+  fetchedAt: string;
+  station: {
+    name: string;
+    place: string;
+    globalId: string;
+    monitorUrl: string;
+  };
+  line: {
+    label: string;
+    transportType: string;
+  };
+  departures: PublicTransitDeparture[];
+};
