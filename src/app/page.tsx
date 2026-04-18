@@ -10,6 +10,7 @@ export default function HomePage() {
           <a href="#">Overview</a>
           <a href="#">How It Works</a>
           <a href="/tictactoe">Tic-Tac-Toe</a>
+          <a href="/chatbot">Chatbot</a>
         </nav>
       </header>
 
