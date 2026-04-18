@@ -1,228 +1,349 @@
 # TUMmy
 
-TUMmy is a campus dashboard plus student agent for TUM.
+> The student operating system for TUM.
 
-The idea is simple:
+TUMmy is not another university chatbot.
 
-- TUM students have to jump between many separate websites and tools.
-- Important information is scattered across TUM pages, campus systems, maps, cafeteria data, and transit pages.
-- TUMmy puts the important parts into one interface and adds a `UNI Copilot` that helps students understand, organize, and eventually automate their university work.
+It is the layer that sits on top of the fragmented TUM ecosystem and turns scattered websites, schedules, rooms, campus navigation, cafeteria data, and student tasks into one intelligent student experience.
 
-The long-term goal is not just to show information. It is to build a campus operating layer on top of the TUM web ecosystem: one place that watches TUM sources, remembers what matters for the student, and suggests or prepares the next useful action.
+One dashboard. One `UNI Copilot`. One place that knows what matters next.
 
-## What This Project Is About
+For the Reply Challenge, the core idea is simple and strong:
 
-TUMmy is built around one problem:
+- students lose time because TUM information is fragmented
+- the important signals are spread across many websites and systems
+- most tools show information, but do not help students act on it
 
-> TUM students live inside a fragmented service jungle.
+TUMmy fixes that by combining:
 
-Schedules, rooms, deadlines, campus navigation, cafeteria menus, and transport information all live in different places. The project turns that into one student-facing system with:
+- a single dashboard for the most relevant campus signals
+- live integrations with real TUM-related public APIs
+- an agent architecture with memory about TUM, deadlines, places, opportunities, and student context
+- a `UNI Copilot` that moves from “show me data” to “help me run university life”
 
-- a dashboard for the most relevant TUM information
-- a `UNI Copilot` for help and campus context
-- an agent architecture that can remember TUM knowledge and student context
-- automation-oriented planning for things like deadline alerts, room changes, and opportunity discovery
+## Why This Wins Attention
 
-In short: this project is about displaying the important TUM web services in one place and adding an agent that helps students work less manually.
+The problem is immediate and recognizable:
 
-## What Works In The Current Repo
+> Every TUM student knows the pain of switching between portals, missing details, and reacting too late.
 
-The current checkout already contains a working Next.js app with live public data integrations.
+The product pitch is immediate:
 
-### Live in the dashboard
+> TUMmy watches the campus, remembers what matters, and helps students act before friction turns into stress.
 
-- `Mensa`: live menu data from the TUM-Dev Eat API, with OpenMensa fallback
+Why this is powerful in a Reply Challenge setting:
+
+- it solves a real TUM-specific pain point
+- it already integrates real public campus data
+- it is designed as an agent system, not just a chat wrapper
+- it has a clear next step from information dashboard to autonomous assistant
+- it combines product clarity, real integrations, and agent architecture in one story
+
+## The Hook
+
+TUM students do not need another page with more cards.
+
+They need a system that can:
+
+- understand the campus
+- remember context
+- surface the right information at the right time
+- and reduce the manual overhead of being a student
+
+That is the hook:
+
+> TUMmy turns TUM from a collection of websites into a usable system.
+
+## The 30-Second Demo Story
+
+Imagine a TUM student opening one dashboard in the morning and immediately seeing:
+
+- today’s campus food from the Mensa API
+- public room and lecture hall information from TUMonline-related data
+- live U6 departures from `Garching, Forschungszentrum`
+- campus search and room lookup via NavigaTUM
+- an assistant that knows the TUM world and can later turn those signals into actions
+
+That is the demo in one sentence:
+
+TUMmy makes the university feel like one system instead of ten disconnected ones.
+
+## What The Product Is Really About
+
+This project is about reducing student friction at TUM.
+
+Today, students have to manually piece together:
+
+- where they need to go
+- what changed
+- what is due
+- what is worth noticing
+- how to move across campus fast enough
+
+TUMmy is built to become the system that handles that context for them.
+
+In product terms, TUMmy is:
+
+- the dashboard layer for campus visibility
+- the `UNI Copilot` layer for understanding and guidance
+- the memory layer for TUM knowledge and student context
+- the agent layer for prioritization, planning, and action
+
+## What Is Already Real In This Repo
+
+This repo already contains a working Next.js app with live backend integrations.
+
+### Live right now
+
+- `Mensa`: live data via the TUM-Dev Eat API with OpenMensa fallback
 - `TUMonline` tile: public room data via the TUM Natural Sciences API
-- `Campus Finder`: live location search and details via NavigaTUM, available inside the `UNI Copilot` detail view
-- `Garching U-Bahn`: live U6 departures for `Garching, Forschungszentrum` via the MVG API
-- `Chatbot`: a server-side Bedrock-backed chat route
+- `Campus Finder`: live building and room search via NavigaTUM
+- `Garching U-Bahn`: live U6 departures via the MVG API
+- `Chatbot`: a server-side Bedrock-powered chat endpoint
 
-### Still demo or placeholder in the current source
+### Still demo or placeholder
 
 - `Calendar`: local demo data
 - `Moodle`: local demo data
-- `Login`: mock login flow, not real TUM SSO
-- authenticated TUM systems and real write actions are not wired yet
+- `Login`: mock login page, not real TUM SSO
+- the fully autonomous memory-backed agent is architected, but not yet fully connected to the live chat route
 
-That distinction matters: the public data layer is already real, while the full autonomous campus agent is only partially surfaced in the web UI today.
+For a jury, that matters because:
 
-## How The Backend Works
+the project already proves live integration today, while the agent layer gives it a strong tomorrow-story.
 
-The web app is a Next.js app. The backend is built around internal API routes in `src/app/api`.
+## The Big Vision
 
-The important design rule is:
+The goal is not a nicer dashboard.
 
-> the browser never talks directly to the external campus APIs.
+The goal is:
 
-Instead, every widget calls an internal route, and the route calls a server-side connector.
+> a TUM operating system for students
 
-### Data flow
+That means a system that can:
+
+- watch campus signals
+- remember what matters
+- connect context across sources
+- explain why something is relevant
+- and prepare helpful actions before the student has to ask
+
+That naturally leads to features like:
+
+- room-change route rescue
+- deadline protection alerts
+- surfacing relevant TUM opportunities
+- digesting TUM websites into student-relevant summaries
+- approval-based actions instead of manual friction
+
+## Why The Backend Is Strong
+
+The backend is simple in structure, but strong in consequence:
+
+> the browser never talks directly to external campus APIs
+
+Instead, the frontend always talks to internal Next.js API routes, and those routes talk to server-side connectors.
+
+### Backend flow
 
 ```text
-Dashboard widget / UI
-        |
-        v
-Internal Next.js API route in src/app/api/*
-        |
-        v
-Server-only connector in src/server/public-campus/*
-        |
-        v
-External public API
-        |
-        v
-Normalized typed payload in src/lib/public-campus-types.ts
-        |
-        v
-UI widget renders a stable internal shape
+UI widget
+   |
+   v
+internal route in src/app/api/*
+   |
+   v
+server-only connector in src/server/public-campus/*
+   |
+   v
+external API
+   |
+   v
+normalized payload type in src/lib/public-campus-types.ts
+   |
+   v
+stable UI rendering
 ```
 
-### Why this structure is useful
+This gives the project a serious backend story:
 
-- the frontend stays simple
-- external API quirks are hidden behind one backend layer
-- upstream responses are normalized into stable app-specific types
-- rate limiting, timeouts, and cache revalidation stay on the server
-- later authenticated sources can be added without rewriting the UI
+- the UI stays simple
+- upstream API changes are isolated in connectors
+- response shapes are controlled by the app
+- timeouts and revalidation stay on the server
+- the architecture can scale from public APIs to authenticated TUM systems
 
-### Shared backend utility
+### Backend in repo terms
 
-`src/server/public-campus/fetch-json.ts` is the common fetch helper for public connectors.
+The backend is easiest to understand as three layers:
 
-It gives us:
+| Layer | Folder | Responsibility |
+| --- | --- | --- |
+| UI layer | `src/components` and `src/app/page.tsx` | renders tiles and asks the backend for data |
+| route layer | `src/app/api/*` | exposes internal endpoints to the frontend |
+| connector layer | `src/server/public-campus/*` | talks to external APIs and normalizes responses |
 
-- `server-only` execution
-- a 10 second timeout
-- JSON-only fetch handling
-- Next.js revalidation support
-- one place to enforce consistent upstream behavior
+And then there is one shared type layer:
 
-## Public API Routes In This Repo
+| Layer | Folder | Responsibility |
+| --- | --- | --- |
+| type layer | `src/lib/public-campus-types.ts` | defines the payload shape that the frontend receives |
 
-| Internal route | Connector | External source | Purpose |
+### Example: how one live widget works
+
+The `Garching U-Bahn` tile is a good example:
+
+1. `TransitTile.tsx` calls `/api/public/transit/garching-forschungszentrum`
+2. `src/app/api/public/transit/garching-forschungszentrum/route.ts` receives the request
+3. that route calls `src/server/public-campus/transit.ts`
+4. the connector calls the MVG API
+5. the raw MVG response is normalized into `PublicTransitPayload`
+6. the tile renders a stable shape with departure times, platform, and direction
+
+The same pattern is used for:
+
+- Mensa
+- TUM room data
+- NavigaTUM search
+- transit
+
+### The two backend paths in this project
+
+There are really two backend stories in this repo:
+
+#### 1. The live Next.js backend
+
+This is what powers the app today.
+
+It includes:
+
+- public API routes under `src/app/api/public/*`
+- the chat route under `src/app/api/chat/route.ts`
+- the server connectors in `src/server/public-campus/*`
+
+#### 2. The agent backend
+
+This is the autonomous campus-agent layer prepared under `workers/campus_agent`.
+
+Its job is different:
+
+- ingest TUM-related documents
+- build memory
+- rank what matters next
+- prepare actions and alerts
+
+That separation is useful:
+
+- the Next.js backend is the live product API layer
+- the worker backend is the decision and memory layer for the agent
+
+## Live Integrations Already Connected
+
+| Internal route | Connector | External source | Why it matters |
 | --- | --- | --- | --- |
-| `POST /api/chat` | `src/app/api/chat/route.ts` | AWS Bedrock | chat replies for the chatbot page |
-| `GET /api/public/mensa` | `src/server/public-campus/mensa.ts` | TUM-Dev Eat API, OpenMensa fallback | cafeteria dishes and prices |
-| `GET /api/public/tum/rooms` | `src/server/public-campus/tum-nat.ts` | TUM NAT API | public room and lecture hall data |
-| `GET /api/public/navigatum/search` | `src/server/public-campus/navigatum.ts` | NavigaTUM | campus search |
-| `GET /api/public/navigatum/locations/[id]` | `src/server/public-campus/navigatum.ts` | NavigaTUM | room/building details |
-| `GET /api/public/navigatum/route` | `src/server/public-campus/navigatum.ts` | NavigaTUM | route lookup |
-| `GET /api/public/transit/garching-forschungszentrum` | `src/server/public-campus/transit.ts` | MVG API | U6 departures for Garching Forschungszentrum |
+| `POST /api/chat` | `src/app/api/chat/route.ts` | AWS Bedrock | powers the live assistant backend |
+| `GET /api/public/mensa` | `src/server/public-campus/mensa.ts` | TUM-Dev Eat API, OpenMensa fallback | daily student-life data that is immediately useful |
+| `GET /api/public/tum/rooms` | `src/server/public-campus/tum-nat.ts` | TUM NAT API | public TUM room and lecture hall information |
+| `GET /api/public/navigatum/search` | `src/server/public-campus/navigatum.ts` | NavigaTUM | campus search and room discovery |
+| `GET /api/public/navigatum/locations/[id]` | `src/server/public-campus/navigatum.ts` | NavigaTUM | place detail lookup |
+| `GET /api/public/navigatum/route` | `src/server/public-campus/navigatum.ts` | NavigaTUM | route planning |
+| `GET /api/public/transit/garching-forschungszentrum` | `src/server/public-campus/transit.ts` | MVG API | live U-Bahn departures for a real TUM mobility use case |
 
-## The Current Web Backend, Explained Simply
+## Why This Architecture Matters For Reply
 
-### 1. UI widgets call internal routes
+This is not just “we connected some APIs”.
 
-Examples:
+The backend is designed like a real campus integration layer:
 
-- `MensaTile` calls `/api/public/mensa`
-- `TumOnlineTile` calls `/api/public/tum/rooms`
-- `TransitTile` calls `/api/public/transit/garching-forschungszentrum`
-- `CopilotDetail` calls `/api/public/navigatum/search` and `/api/public/navigatum/locations/[id]`
+- each source has its own connector
+- each connector translates raw upstream data into app-owned types
+- the frontend consumes one consistent interface
+- the architecture can grow from public APIs to authenticated systems later
 
-### 2. Internal routes call connector functions
+That is exactly the kind of system you build when the goal is an actual agent, not a toy demo.
 
-Each route keeps logic thin and moves real integration work into `src/server/public-campus`.
+## The Role Of `UNI Copilot`
 
-That means:
+The `UNI Copilot` is the product face of the agent.
 
-- route handlers parse query params
-- connector files call upstream APIs
-- connector files normalize the response
-- the route returns the normalized payload to the browser
+Right now, in the current repo, it works in two layers:
 
-### 3. The app owns the response shape
+### Compact tile on the dashboard
 
-All public campus responses are typed in `src/lib/public-campus-types.ts`.
-
-This is important because it decouples the UI from raw upstream formats. If an external API changes, only the connector needs to change.
-
-## How `UNI Copilot` Works Today
-
-`UNI Copilot` currently has two layers:
-
-### 1. The dashboard tile
-
-The compact `UNI Copilot` tile is a lightweight entry point on the home screen.
-
-It lives in:
+This is the quick entry point:
 
 - `src/components/home/tiles/CopilotTile.tsx`
 
-### 2. The detail view
+It signals that the product is not just a dashboard. There is intelligence sitting above the data.
 
-When opened, the copilot detail currently shows:
+### Detail view with real campus utility
 
-- a link into the chatbot
-- live campus lookup via NavigaTUM
-- building and room detail lookup
+The detail view currently gives:
+
+- a path into the live chatbot
+- live campus lookup through NavigaTUM
+- building and room discovery
 
 It lives in:
 
 - `src/components/home/details/CopilotDetail.tsx`
 
-So in the current repo, the `UNI Copilot` is already the place where campus help starts, but it is not yet fully connected to the autonomous memory pipeline.
+So the `UNI Copilot` is already the narrative center of the product: the place where campus context becomes guidance.
 
-## How The Chat Backend Works
+## How The Live Chat Works Today
 
-The chat endpoint is:
+The current chat backend is:
 
 - `src/app/api/chat/route.ts`
 
-It currently works like this:
+Flow:
 
-1. The browser sends the message history to `POST /api/chat`
-2. The backend normalizes the messages
-3. The backend calls AWS Bedrock
-4. The route returns the text reply
+1. the browser sends messages to `POST /api/chat`
+2. the backend normalizes the chat history
+3. the backend calls AWS Bedrock
+4. the reply is returned to the UI
 
-### Current chat model setup
+Supported configuration in the current code:
 
-The route supports:
+- `BEDROCK_API_KEY` or `AWS_BEARER_TOKEN`
+- `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
+- `BEDROCK_REGION`
+- `BEDROCK_MODEL_ID`
 
-- bearer-token auth through `BEDROCK_API_KEY` or `AWS_BEARER_TOKEN`
-- AWS credential auth through `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
-- configurable region through `BEDROCK_REGION`
-- configurable model through `BEDROCK_MODEL_ID`
-
-Default model in the current code:
+Default model in the code:
 
 - `us.anthropic.claude-3-5-haiku-20241022-v1:0`
 
-### Important current limitation
+### Important honesty point
 
-The web chat route currently talks directly to Bedrock.
+The live chat is real, but today it is still a direct Bedrock route.
 
-It does not yet retrieve memory from the campus-agent worker or from `cognee`. So the web chat is live, but the full TUM memory layer is still an architectural layer rather than a finished UI integration.
+It does not yet pull memory from the campus-agent pipeline or from `cognee`. That is the next architectural connection, not something we should overclaim.
 
-## How The Campus Agent Uses `cognee` For Memory
+## How The Agent Uses `cognee` Memory
 
 This repo also contains a separate campus-agent architecture under `workers/campus_agent`.
 
-Important: in this checkout, that Python part is only present as compiled `.pyc` artifacts in `workers/campus_agent/__pycache__`, not as editable source files. But the structure is still clear from the artifacts.
+In this snapshot, those Python files are only present as compiled `.pyc` artifacts, but they still show the intended system design very clearly.
 
-### The job of the memory layer
+### What the memory is for
 
-The agent needs memory for two things:
+The agent needs to remember:
 
-- memory about TUM and the project world
-- memory about what matters to a student right now
+- what exists in the TUM ecosystem
+- what changed recently
+- what matters to a specific student
+- how different TUM signals relate to each other
 
-That means it should remember things like:
+So this is not just chat history memory.
 
-- course names
-- room changes
-- deadlines
-- TUM opportunity pages
-- campus locations
-- previously seen alerts
-- relationships between topics, labs, buildings, courses, and tasks
+It is campus memory.
 
-### The normalized memory unit: `SourceDocument`
+### The shared memory input: `SourceDocument`
 
-The worker pipeline uses a normalized document shape called `SourceDocument`.
+Different sources are normalized into a common shape called `SourceDocument`.
 
-From the artifacts, it contains fields such as:
+From the worker artifacts, that includes fields such as:
 
 - `source_id`
 - `source_name`
@@ -234,27 +355,33 @@ From the artifacts, it contains fields such as:
 - `kind`
 - `metadata`
 
-That is the key idea: different TUM sources are first converted into one shared document format before memory is built.
+This is a very important architectural choice:
 
-### The sources the agent is built to ingest
+before the agent can reason, all TUM information is translated into one common document model.
 
-From the worker fixture loader, the agent pipeline is designed around documents like:
+### What kinds of TUM knowledge go into memory
+
+The worker artifacts show fixture and source categories such as:
 
 - `tumonline/schedule.json`
 - `moodle/deadlines.json`
 - `opportunities/public_opportunities.json`
 - `webscraper/tum_sites_snapshot.json`
 
-So the memory is not only meant for one app screen. It is meant to hold a broad TUM context:
+That means the memory is intended to cover:
 
-- academic schedule signals
-- deadline signals
+- schedule changes
+- deadline changes
 - public TUM opportunities
-- crawled TUM website knowledge
+- crawled TUM website content
 
-### Memory providers: local or `cognee`
+So when we say “the agent knows TUM”, that is what we mean:
 
-From the worker artifacts, the campus agent supports multiple memory modes:
+it is designed to ingest the TUM campus world as structured memory, not just answer one-off prompts.
+
+### Memory providers in the agent
+
+The artifacts show multiple memory modes:
 
 - `auto`
 - `local`
@@ -265,43 +392,32 @@ The memory layer includes:
 - `LocalMemoryAdapter`
 - `CogneeMemoryAdapter`
 
-### What `cognee` is doing in this design
+### What `cognee` does in this architecture
 
-In this project, `cognee` is the intended structured memory engine for the campus agent.
+In this project, `cognee` is the intended memory engine behind the campus agent.
 
-Its role is:
+Its job is to:
 
 - ingest normalized TUM documents
-- build entities and relationships out of those documents
-- make that memory searchable for the planner
-- return relevant campus context when the agent needs to decide what to do next
+- extract entities and relationships
+- make those relationships retrievable
+- let the planner ask: what matters next for this student?
 
-The worker artifacts show that `CogneeMemoryAdapter` builds memory asynchronously, serializes document text, and queries the memory with prompts like:
+The artifacts show that the `CogneeMemoryAdapter` builds memory asynchronously, serializes document content, and queries the memory with prompts like:
 
 > What should the TUM campus agent do next for this student?
 
-That means `cognee` is not just a storage bucket here. It is the retrieval layer the agent uses to turn TUM information into agent decisions.
+That is exactly the difference between a dashboard and an agent.
 
-### What happens if `cognee` is not available
+The dashboard shows data.
 
-The artifacts also show a local fallback path:
+The memory-backed agent can decide what is relevant inside that data.
 
-- if `cognee` is not ready, the system can fall back to a local memory adapter
-- strict `cognee` mode can also be forced
+### Fallback behavior
 
-The worker config indicates:
+The worker also supports a local fallback when `cognee` is not available.
 
-- `LLM_API_KEY` or `OPENAI_API_KEY` is required for `cognee` mode
-- there is also a `cognee_ready` check
-
-So the intended behavior is:
-
-- use `cognee` when available
-- otherwise fall back to local memory for a demo-safe run
-
-### What the local fallback stores
-
-The local memory adapter builds a `MemorySnapshot` with:
+The local memory snapshot contains:
 
 - provider
 - dataset
@@ -310,95 +426,99 @@ The local memory adapter builds a `MemorySnapshot` with:
 - relationships
 - retrieval preview
 
-This fallback is useful for demos because the agent can still reason over normalized TUM documents even without the full `cognee` stack.
+This makes the architecture demo-safe:
 
-## How The Agent Pipeline Is Structured
+- if `cognee` is available, the agent can use the richer memory path
+- if not, the system can still run with a local memory snapshot
 
-From the worker artifacts, the autonomous campus-agent pipeline has these stages:
+The artifacts indicate that `cognee` mode expects:
 
-1. load fixture or source documents
-2. build memory from those documents
+- `LLM_API_KEY`
+
+or
+
+- `OPENAI_API_KEY`
+
+## The Agent Pipeline
+
+From the worker artifacts, the autonomous campus-agent pipeline is structured as:
+
+1. load source documents
+2. build memory
 3. define the mission
 4. consolidate signals
 5. plan actions
 6. build alerts
-7. write a run artifact
+7. export a run artifact
 
-### Named agent roles in the pipeline
-
-The worker includes these roles:
+### Agent roles
 
 - `MissionControlAgent`
 - `SignalHarvesterAgent`
 - `CampusPlannerAgent`
 - `ActionRunnerAgent`
 
-### What those roles do
+### What those roles mean
 
-- `MissionControlAgent`: defines the high-level mission for the student
-- `SignalHarvesterAgent`: counts and consolidates source coverage
-- `CampusPlannerAgent`: decides what actions matter most
-- `ActionRunnerAgent`: turns planned actions into alert messages and approval prompts
+- `MissionControlAgent`: defines the high-level goal
+- `SignalHarvesterAgent`: consolidates and counts source signals
+- `CampusPlannerAgent`: ranks what should matter next
+- `ActionRunnerAgent`: turns plans into alerts and approval-ready outputs
 
-### What kinds of actions it plans
+### The kinds of actions the pipeline is aiming for
 
-From the pipeline strings, the planner is built around examples like:
+The worker strings show example actions like:
 
-- route rescue after a room change
+- route rescue after room changes
 - deadline shield alerts
-- surfacing a high-fit research opportunity
-- quiet digests when there is nothing urgent
+- surfacing research opportunities
+- quiet digests when nothing urgent happened
 
-That matches the overall product goal very well: not just answering questions, but planning student-helpful actions.
+That is why this project is a strong Reply fit:
 
-## What The Agent Currently Produces
+the architecture is already pointed toward proactive student support, not passive chat.
 
-The worker data model includes:
+## Current State
 
-- `PlannedAction`
-- `AlertMessage`
-- `TraceEvent`
-- `PipelineResult`
+Today, the repo already proves:
 
-So the intended agent output is not “one chat answer”.
+- the web app is real
+- the public API integrations are real
+- the dashboard is real
+- the Bedrock chat backend is real
+- the memory architecture is already designed
+- the `cognee`-based agent path is already visible in the worker artifacts
 
-It is a structured decision package:
+What remains to finish:
 
-- what happened
-- what the agent thinks matters
-- what action it wants to take
-- which source documents support that action
-- whether the action needs approval
+- connecting live chat to the memory layer
+- restoring the Python worker as editable source
+- replacing mocked sources like Calendar and Moodle
 
-## Important Reality Check About The Current Repo
+The strongest way to frame it is:
 
-To make this README honest and easy to understand:
+> TUMmy already proves the campus integration layer. The next step is to turn that layer into a fully memory-backed campus agent.
 
-- the Next.js web app and public API backend are present as source code and work now
-- the `UNI Copilot` UI exists now
-- the Bedrock chat route exists now
-- the campus-agent memory architecture with `cognee` is visible from the worker artifacts
-- but the web chat is not yet wired to the `cognee` memory pipeline in this checkout
-- and the Python worker is not currently included as editable source files
+That is a good jury position because it shows both:
 
-So the right way to describe the project today is:
-
-> TUMmy already has a live campus dashboard backend and the first real TUM public integrations. The full autonomous agent memory layer is already designed around `cognee`, but is not yet fully connected to the live web chat in this repo snapshot.
+- traction
+- and a believable path to autonomy
 
 ## Repo Map
 
-### Frontend pages
+### Core frontend
 
-- `src/app/page.tsx`: home dashboard
+- `src/app/page.tsx`: dashboard
 - `src/app/chatbot/page.tsx`: chat UI
-- `src/app/login/page.tsx`: mock login page
+- `src/components/home/tiles/*`: dashboard widgets
+- `src/components/home/details/*`: detailed views, including `UNI Copilot`
 
-### Internal backend routes
+### Backend routes
 
 - `src/app/api/chat/route.ts`
 - `src/app/api/public/*`
 
-### Server-side API connectors
+### Server connectors
 
 - `src/server/public-campus/fetch-json.ts`
 - `src/server/public-campus/mensa.ts`
@@ -406,11 +526,11 @@ So the right way to describe the project today is:
 - `src/server/public-campus/navigatum.ts`
 - `src/server/public-campus/transit.ts`
 
-### Shared payload types
+### Shared typed payloads
 
 - `src/lib/public-campus-types.ts`
 
-### Agent architecture artifacts
+### Agent artifacts
 
 - `workers/campus_agent/__pycache__/agents.cpython-310.pyc`
 - `workers/campus_agent/__pycache__/memory.cpython-310.pyc`
@@ -419,19 +539,19 @@ So the right way to describe the project today is:
 
 ## Local Development
 
-### Install
+Install:
 
 ```bash
 npm install
 ```
 
-### Run the app
+Run:
 
 ```bash
 npm run dev
 ```
 
-### Production build
+Production build:
 
 ```bash
 npm run build
@@ -439,15 +559,15 @@ npm run build
 
 ## Environment Variables
 
-### For chat with AWS Bedrock
+### Bedrock chat
 
-Set one of these auth options:
+Use one of:
 
 ```bash
 BEDROCK_API_KEY=...
 ```
 
-or
+or:
 
 ```bash
 AWS_ACCESS_KEY_ID=...
@@ -461,30 +581,30 @@ BEDROCK_REGION=us-east-1
 BEDROCK_MODEL_ID=us.anthropic.claude-3-5-haiku-20241022-v1:0
 ```
 
-### For the planned `cognee` memory layer
+### Planned `cognee` memory mode
 
-The worker artifacts indicate that `cognee` mode expects one of:
+The worker artifacts indicate one of:
 
 ```bash
 LLM_API_KEY=...
 ```
 
-or
+or:
 
 ```bash
 OPENAI_API_KEY=...
 ```
 
-## Recommended Next Steps
+## Best Next Steps
 
-If you want to turn the current repo into the full product vision, the highest-value next steps are:
+If we want to turn this from a strong demo into the full agent product, the highest-value next steps are:
 
-1. Connect `/api/chat` to the campus-agent memory layer instead of calling Bedrock directly.
-2. Restore the Python worker as editable source files instead of `.pyc` artifacts only.
-3. Replace the demo `Calendar` and `Moodle` data with real authenticated connectors.
-4. Use `cognee` as the retrieval layer for TUM websites, opportunities, deadlines, and prior alerts.
-5. Add approval-based agent actions for messages, deadline nudges, and route rescues.
+1. connect `/api/chat` to the campus-agent memory layer
+2. restore the Python worker as editable source files
+3. replace mocked `Calendar` and `Moodle` with authenticated connectors
+4. ingest more TUM pages into `cognee`
+5. expose approval-based actions through the `UNI Copilot`
 
-## One-Sentence Summary
+## One-Line Pitch
 
-TUMmy is a unified TUM student dashboard with a `UNI Copilot`: the live backend already aggregates public campus APIs, and the broader agent architecture is designed to use `cognee` memory so it can understand TUM context, remember what matters, and help automate student work.
+TUMmy turns the fragmented TUM web ecosystem into a student operating system: a live campus dashboard today, and a memory-backed `UNI Copilot` that can understand TUM, remember what matters, and help run student life tomorrow.
