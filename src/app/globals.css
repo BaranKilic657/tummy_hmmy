@@ -760,6 +760,36 @@ body.loginPage::after {
   height: 100%;
 }
 
+.tile-click-target {
+  cursor: pointer;
+}
+
+.home-columns .tile-moodle {
+  flex: 1 1 auto;
+  display: flex;
+}
+
+.home-columns .tile-moodle > .widget {
+  width: 100%;
+  min-height: 100%;
+}
+
+.tile-click-target:focus-visible {
+  outline: 2px solid #1295a2;
+  outline-offset: 3px;
+  border-radius: 16px;
+}
+
+.tile-click-target > .widget {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.tile-click-target:hover > .widget {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 26px rgba(5, 61, 67, 0.16);
+  border-color: rgba(10, 96, 102, 0.28);
+}
+
 .widget {
   border-radius: 16px;
   border: 1px solid rgba(11, 94, 100, 0.18);
@@ -787,7 +817,127 @@ body.loginPage::after {
 
 .widget-moodle {
   min-height: 190px;
-  flex: 1 1 auto;
+}
+
+.widget-moodle-compact {
+  display: grid;
+  gap: 0.55rem;
+  align-content: start;
+}
+
+.widget-moodle-compact > p {
+  margin: 0;
+}
+
+.moodle-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.42rem;
+}
+
+.moodle-kpi {
+  border: 1px solid rgba(9, 90, 95, 0.18);
+  border-radius: 10px;
+  background: linear-gradient(160deg, rgba(232, 251, 250, 0.96), rgba(219, 247, 246, 0.9));
+  padding: 0.36rem 0.44rem;
+  display: grid;
+  gap: 0.04rem;
+}
+
+.moodle-kpi strong {
+  color: #0d4a51;
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.moodle-kpi span {
+  color: rgba(14, 75, 82, 0.86);
+  font-size: 0.69rem;
+}
+
+.moodle-next {
+  border: 1px solid rgba(8, 89, 95, 0.2);
+  border-radius: 10px;
+  background: rgba(238, 253, 252, 0.9);
+  padding: 0.4rem 0.52rem;
+  display: grid;
+  gap: 0.08rem;
+}
+
+.moodle-next span {
+  color: rgba(14, 75, 82, 0.78);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.moodle-next strong {
+  color: #0d4c53;
+  font-size: 0.8rem;
+}
+
+.moodle-next em {
+  color: rgba(14, 75, 82, 0.86);
+  font-size: 0.72rem;
+  font-style: normal;
+}
+
+.moodle-section {
+  margin-top: 0.62rem;
+}
+
+.moodle-section h3 {
+  margin: 0 0 0.32rem;
+  color: #0f4a50;
+  font-size: 0.8rem;
+}
+
+.moodle-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.36rem;
+}
+
+.moodle-chip {
+  border: 1px solid rgba(8, 88, 94, 0.18);
+  border-radius: 999px;
+  background: rgba(234, 252, 251, 0.9);
+  padding: 0.2rem 0.5rem;
+  color: #0f5057;
+  font-size: 0.72rem;
+}
+
+.moodle-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.34rem;
+}
+
+.moodle-item {
+  border: 1px solid rgba(9, 89, 95, 0.16);
+  border-radius: 9px;
+  background: linear-gradient(160deg, rgba(232, 251, 250, 0.95), rgba(219, 247, 246, 0.9));
+  padding: 0.32rem 0.48rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  color: #0e4c53;
+  font-size: 0.74rem;
+}
+
+.moodle-item strong {
+  font-size: 0.76rem;
+}
+
+.moodle-item span {
+  color: rgba(14, 75, 82, 0.9);
+}
+
+.moodle-item-single {
+  justify-content: flex-start;
 }
 
 .widget-mensa {
@@ -1072,6 +1222,151 @@ body.loginPage::after {
   font-size: 0.68rem;
 }
 
+.detail-subtitle {
+  margin: 0 0 0.72rem;
+  color: rgba(14, 78, 84, 0.88);
+  font-size: 0.88rem;
+}
+
+.mensa-detail-top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.72rem;
+}
+
+.mensa-detail-top .detail-subtitle {
+  margin: 0;
+}
+
+.mensa-select-wrap {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.22rem;
+  font-size: 0.76rem;
+  color: #0e4f56;
+  font-weight: 600;
+}
+
+.mensa-select-wrap select {
+  min-width: 230px;
+  border: 1px solid rgba(10, 93, 99, 0.28);
+  border-radius: 10px;
+  background: rgba(241, 255, 254, 0.95);
+  color: #0f5057;
+  padding: 0.42rem 0.56rem;
+  font-size: 0.86rem;
+}
+
+.mensa-week-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.mensa-day-col {
+  border: 1px solid rgba(9, 90, 95, 0.2);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.93);
+  padding: 0.62rem;
+}
+
+.mensa-day-col h4 {
+  margin: 0;
+  color: #0d4349;
+  font-size: 0.88rem;
+}
+
+.mensa-week-list {
+  margin: 0.56rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.42rem;
+}
+
+.mensa-item-week {
+  padding: 0.4rem 0.44rem;
+  font-size: 0.74rem;
+}
+
+.focus-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+}
+
+.focus-overlay.is-open {
+  pointer-events: auto;
+}
+
+.focus-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(2, 22, 25, 0.42);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.focus-modal {
+  position: absolute;
+  left: 50%;
+  top: 7vh;
+  width: min(94vw, 980px);
+  border-radius: 20px;
+  border: 1px solid rgba(8, 89, 95, 0.28);
+  background: rgba(241, 255, 255, 0.98);
+  box-shadow: 0 26px 78px rgba(2, 32, 36, 0.35);
+  padding: 1rem;
+  transform: translateX(-50%) translateY(16px) scale(0.96);
+  opacity: 0;
+  transition: transform 0.28s cubic-bezier(0.2, 0.75, 0.2, 1), opacity 0.28s ease;
+}
+
+.focus-overlay.is-open .focus-backdrop {
+  opacity: 1;
+}
+
+.focus-overlay.is-open .focus-modal {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+.focus-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.focus-head h3 {
+  margin: 0;
+  color: #0a4147;
+  font-size: 1.2rem;
+}
+
+.focus-head button {
+  border: 1px solid rgba(9, 93, 99, 0.25);
+  background: #edfffd;
+  color: #0f535a;
+  border-radius: 999px;
+  padding: 0.38rem 0.74rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.focus-body .widget {
+  min-height: 0;
+}
+
+.focus-body .widget-calendar .calendar-preview-hint {
+  margin-top: 0.18rem;
+}
+
 @media (max-width: 700px) {
   .home-shell {
     padding: 0.8rem;
@@ -1117,5 +1412,24 @@ body.loginPage::after {
 
   .calendar-week-grid {
     grid-template-columns: 1fr;
+  }
+
+  .mensa-detail-top {
+    flex-wrap: wrap;
+  }
+
+  .mensa-select-wrap select {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .mensa-week-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .focus-modal {
+    top: 4vh;
+    max-height: 92vh;
+    overflow: auto;
   }
 }

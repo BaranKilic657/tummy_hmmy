@@ -11,7 +11,7 @@ export default function ChatbotPage() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hi, ich bin dein einfacher Chatbot. Schreib mir eine Nachricht.",
+      content: "Hi, I am your simple chatbot. Send me a message.",
     },
   ]);
   const [input, setInput] = useState("");
@@ -42,17 +42,17 @@ export default function ChatbotPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(typeof data?.error === "string" ? data.error : "API Fehler");
+        throw new Error(typeof data?.error === "string" ? data.error : "API error");
       }
 
       const reply = typeof data?.reply === "string" ? data.reply : "";
       if (!reply) {
-        throw new Error("Keine Antwort vom Modell.");
+        throw new Error("No reply from the model.");
       }
 
       setMessages((current) => [...current, { role: "assistant", content: reply }]);
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Unbekannter Fehler";
+      const message = err instanceof Error ? err.message : "Unknown error";
       setError(message);
     } finally {
       setIsLoading(false);
@@ -70,7 +70,7 @@ export default function ChatbotPage() {
               <p>{message.content}</p>
             </article>
           ))}
-          {isLoading ? <p className="chat-loading">Antwort wird geladen...</p> : null}
+          {isLoading ? <p className="chat-loading">Loading response...</p> : null}
         </div>
 
         <form className="chat-form" onSubmit={onSubmit}>
@@ -78,11 +78,11 @@ export default function ChatbotPage() {
             type="text"
             value={input}
             onChange={(event) => setInput(event.target.value)}
-            placeholder="Nachricht eingeben..."
-            aria-label="Nachricht"
+            placeholder="Type a message..."
+            aria-label="Message"
           />
           <button type="submit" disabled={isLoading}>
-            Senden
+            Send
           </button>
         </form>
 

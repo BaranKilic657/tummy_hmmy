@@ -4,9 +4,9 @@ export function CopilotTile() {
   return (
     <article className="widget widget-copilot">
       <h2>UNI Copilot</h2>
-      <p>Frag nach Fristen, Räumen, Aufgaben oder Lernplan.</p>
+      <p>Ask about deadlines, rooms, tasks, or your study plan.</p>
       <div className="copilot-input">
-        <span>Frag deinen Copilot...</span>
+        <span>Ask your copilot...</span>
         <button type="button" aria-label="Send">
           →
         </button>

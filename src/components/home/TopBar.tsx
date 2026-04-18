@@ -2,15 +2,17 @@
 
 import Link from "next/link";
 
-export function TopBar() {
+type TopBarProps = {
+  title: string;
+};
+
+export function TopBar({ title }: TopBarProps) {
   return (
     <header className="home-topbar">
       <div className="home-logo">TUMmy</div>
 
       <nav className="home-nav" aria-label="Main navigation">
-        <span>Dashboard</span>
-        <span>Widgets</span>
-        <span>Campus</span>
+        <span>{title}</span>
       </nav>
 
       <div className="home-top-actions">
