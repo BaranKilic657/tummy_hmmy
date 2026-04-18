@@ -16,6 +16,8 @@ export default function LoginPage() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    sessionStorage.setItem("isLoggedIn", "true");
+    localStorage.removeItem("isLoggedIn");
     router.push("/");
   };
 
