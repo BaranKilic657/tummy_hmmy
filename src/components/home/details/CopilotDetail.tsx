@@ -2,11 +2,10 @@
 
 import { FormEvent } from "react";
 
-import { ChatDebugPanel } from "../copilot/ChatDebugPanel";
 import { useCopilotChat } from "../copilot/useCopilotChat";
 
 export function CopilotDetail() {
-  const { messages, input, setInput, isLoading, error, debug, clearChat, sendCurrentInput } = useCopilotChat();
+  const { messages, input, setInput, isLoading, error, clearChat, sendCurrentInput } = useCopilotChat();
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -46,8 +45,6 @@ export function CopilotDetail() {
       </form>
 
       {error ? <p className="chat-error">{error}</p> : null}
-
-      <ChatDebugPanel debug={debug} />
     </section>
   );
 }

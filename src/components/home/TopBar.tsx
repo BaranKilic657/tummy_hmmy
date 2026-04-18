@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type TopBarProps = {
   title: string;
 };
 
 export function TopBar({ title }: TopBarProps) {
+  const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -27,6 +29,8 @@ export function TopBar({ title }: TopBarProps) {
     sessionStorage.removeItem("isLoggedIn");
     localStorage.removeItem("isLoggedIn");
     setIsLoggedIn(false);
+    window.dispatchEvent(new Event("auth-state-changed"));
+    router.push("/");
   };
   return (
     <header className="home-topbar">
@@ -63,14 +67,14 @@ export function TopBar({ title }: TopBarProps) {
               <Link href="/login" className="home-profile-item" role="menuitem">
                 Settings
               </Link>
-              <Link
-                href="/login"
+              <button
+                type="button"
                 className="home-profile-item home-profile-item-danger"
                 role="menuitem"
                 onClick={handleLogout}
               >
                 Log out
-              </Link>
+              </button>
             </div>
           ) : null}
         </div>

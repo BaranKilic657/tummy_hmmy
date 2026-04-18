@@ -255,6 +255,119 @@ body.loginPage::after {
   color: rgba(18, 84, 90, 0.72);
 }
 
+.auth-gate-screen {
+  display: grid;
+  place-items: center;
+}
+
+.auth-gate-shell {
+  width: min(100%, 960px);
+  border-radius: 28px;
+  padding: clamp(1.35rem, 2.8vw, 2.8rem);
+  background: rgba(248, 252, 252, 0.9);
+  border: 1px solid rgba(12, 79, 84, 0.16);
+  box-shadow: 0 18px 42px rgba(3, 24, 29, 0.2);
+  color: #103a3f;
+  backdrop-filter: blur(4px);
+}
+
+.auth-gate-tag {
+  margin: 0;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: rgba(17, 72, 77, 0.8);
+  font-family: "Space Grotesk", "Avenir Next", "Segoe UI", sans-serif;
+}
+
+.auth-gate-shell h1 {
+  margin: 0.8rem 0 0;
+  max-width: 22ch;
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+  line-height: 1.04;
+  letter-spacing: -0.018em;
+  font-family: "Space Grotesk", "Avenir Next", "Segoe UI", sans-serif;
+}
+
+.auth-gate-subtitle {
+  margin: 1rem 0 0;
+  max-width: 64ch;
+  color: rgba(19, 63, 67, 0.86);
+  line-height: 1.62;
+}
+
+.auth-gate-actions {
+  margin-top: 1.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.95rem;
+  flex-wrap: wrap;
+}
+
+.auth-gate-primary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.7rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: 10px;
+  border: 1px solid rgba(12, 74, 79, 0.35);
+  background: #ffffff;
+  color: #123f44;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-gate-primary-btn:hover {
+  background: #f5fbfb;
+}
+
+.auth-gate-primary-btn:focus-visible {
+  outline: 2px solid rgba(14, 90, 96, 0.45);
+  outline-offset: 2px;
+}
+
+.auth-gate-hint {
+  margin: 0;
+  font-size: 0.88rem;
+  color: rgba(29, 77, 82, 0.82);
+}
+
+.auth-gate-highlights {
+  margin-top: 1.75rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.auth-gate-highlights article {
+  border: 1px solid rgba(13, 86, 91, 0.16);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 0.8rem;
+}
+
+.auth-gate-highlights h2 {
+  margin: 0;
+  font-size: 1.02rem;
+  color: #114046;
+}
+
+.auth-gate-highlights p {
+  margin: 0.55rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: rgba(24, 70, 75, 0.85);
+}
+
+.auth-gate-loading {
+  min-height: 220px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-weight: 600;
+}
+
 @media (max-width: 640px) {
   .screen {
     padding: 0.85rem 0.75rem 1.5rem;
@@ -276,6 +389,14 @@ body.loginPage::after {
 
   .hero h1 {
     font-size: clamp(1.6rem, 8vw, 2.25rem);
+  }
+
+  .auth-gate-shell {
+    border-radius: 20px;
+  }
+
+  .auth-gate-highlights {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -906,11 +1027,15 @@ body.loginPage::after {
 }
 
 .home-profile-item {
+  width: 100%;
+  text-align: left;
   border: 1px solid transparent;
   border-radius: 10px;
   padding: 0.45rem 0.5rem;
   color: #14464d;
   text-decoration: none;
+  background: transparent;
+  cursor: pointer;
   font-size: 0.86rem;
   transition: background 0.15s ease, border-color 0.15s ease;
 }

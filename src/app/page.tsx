@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment, useEffect, useMemo, useState, type ReactNode } from "react";
+import Link from "next/link";
 import { CalendarDetail } from "../components/home/details/CalendarDetail";
 import { CopilotDetail } from "../components/home/details/CopilotDetail";
 import { MensaDetail } from "../components/home/details/MensaDetail";
@@ -53,7 +54,28 @@ const TILE_TITLES: Record<DashboardTileId, string> = {
 };
 
 export default function HomePage() {
+  const [isAuthResolved, setIsAuthResolved] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [activeTile, setActiveTile] = useState<DashboardTileId | null>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const syncAuthState = () => {
+      const loggedIn = sessionStorage.getItem("isLoggedIn") === "true";
+      setIsLoggedIn(loggedIn);
+      setIsAuthResolved(true);
+    };
+
+    syncAuthState();
+    window.addEventListener("auth-state-changed", syncAuthState);
+
+    return () => {
+      window.removeEventListener("auth-state-changed", syncAuthState);
+    };
+  }, []);
 
   const todayCalendar = useMemo(() => getTodayCalendarData(), []);
   const topTitle = activeTile ? TILE_TITLES[activeTile] : "Dashboard";
@@ -137,6 +159,52 @@ export default function HomePage() {
 
     return columns;
   }, []);
+
+  if (!isAuthResolved) {
+    return (
+      <main className="screen auth-gate-screen" aria-live="polite" aria-busy="true">
+        <section className="auth-gate-shell auth-gate-loading">
+          <p>Preparing your campus cockpit...</p>
+        </section>
+      </main>
+    );
+  }
+
+  if (!isLoggedIn) {
+    return (
+      <main className="screen auth-gate-screen">
+        <section className="auth-gate-shell" aria-labelledby="auth-gate-title">
+          <p className="auth-gate-tag">TUMmy x HMmy</p>
+          <h1 id="auth-gate-title">Your daily university workflow, one command away.</h1>
+          <p className="auth-gate-subtitle">
+            Check Moodle updates, find rooms, read cafeteria menus, and ask the campus copilot from one
+            place. Sign in once with your TUM credentials to unlock the dashboard.
+          </p>
+
+          <div className="auth-gate-actions">
+            <Link href="/login" className="auth-gate-primary-btn">
+              Login with TUM ID
+            </Link>
+          </div>
+
+          <section className="auth-gate-highlights" aria-label="Campus Autopilot highlights">
+            <article>
+              <h2>Built for TUM students</h2>
+              <p>Purpose-built widgets for transport, rooms, cafeteria, calendar, and AI-powered help.</p>
+            </article>
+            <article>
+              <h2>Grounded answers</h2>
+              <p>Copilot responses blend campus context and retrieval so you can trust what you read.</p>
+            </article>
+            <article>
+              <h2>Fast every morning</h2>
+              <p>One clean dashboard instead of jumping between five tabs before your first lecture.</p>
+            </article>
+          </section>
+        </section>
+      </main>
+    );
+  }
 
   return (
     <main className="screen home-screen">

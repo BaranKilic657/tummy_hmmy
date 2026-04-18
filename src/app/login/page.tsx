@@ -18,6 +18,7 @@ export default function LoginPage() {
     event.preventDefault();
     sessionStorage.setItem("isLoggedIn", "true");
     localStorage.removeItem("isLoggedIn");
+    window.dispatchEvent(new Event("auth-state-changed"));
     router.push("/");
   };
 
