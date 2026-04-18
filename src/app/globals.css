@@ -1142,6 +1142,20 @@ body.loginPage::after {
   font-size: 0.87rem;
 }
 
+.copilot-input input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: #114d54;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.copilot-input input::placeholder {
+  color: rgba(19, 82, 88, 0.68);
+}
+
 .copilot-input button,
 .copilot-input .copilot-send {
   border: 0;
@@ -1158,6 +1172,24 @@ body.loginPage::after {
 
 .copilot-input button {
   cursor: pointer;
+}
+
+.copilot-input button:disabled {
+  opacity: 0.75;
+  cursor: default;
+}
+
+.copilot-preview {
+  margin: 0.55rem 0 0;
+  padding: 0.48rem 0.6rem;
+  border-radius: 10px;
+  border: 1px solid rgba(8, 90, 96, 0.18);
+  background: rgba(240, 253, 253, 0.9);
+  color: #12525a;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  max-height: 3.4rem;
+  overflow: hidden;
 }
 
 .navigator-form {
@@ -1531,6 +1563,41 @@ body.loginPage::after {
   gap: 0.65rem;
 }
 
+.calendar-custom-form {
+  margin: 0 0 0.72rem;
+  display: grid;
+  grid-template-columns: 1fr 0.7fr 0.7fr 1.3fr 0.9fr auto;
+  gap: 0.45rem;
+}
+
+.calendar-custom-form select,
+.calendar-custom-form input {
+  min-width: 0;
+  height: 2rem;
+  border-radius: 10px;
+  border: 1px solid rgba(11, 91, 97, 0.22);
+  background: rgba(248, 255, 255, 0.96);
+  color: #0f4c53;
+  padding: 0 0.55rem;
+  font-size: 0.8rem;
+}
+
+.calendar-custom-form button {
+  border: 1px solid rgba(10, 94, 100, 0.3);
+  background: #0f6168;
+  color: #f1ffff;
+  border-radius: 10px;
+  height: 2rem;
+  padding: 0 0.8rem;
+  font-size: 0.79rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.calendar-custom-form button:hover {
+  opacity: 0.92;
+}
+
 .calendar-day-col {
   border: 1px solid rgba(8, 88, 93, 0.2);
   border-radius: 14px;
@@ -1837,6 +1904,10 @@ body.loginPage::after {
 
   .calendar-week-grid {
     grid-template-columns: 1fr;
+  }
+
+  .calendar-custom-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .mensa-detail-top {
