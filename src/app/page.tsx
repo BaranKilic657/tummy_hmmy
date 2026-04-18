@@ -10,6 +10,7 @@ export default function HomePage() {
           <a href="#">Overview</a>
           <a href="#">How It Works</a>
           <a href="/tictactoe">Tic-Tac-Toe</a>
+          <a href="/login">Login</a>
         </nav>
       </header>
 
@@ -23,6 +24,9 @@ export default function HomePage() {
         </p>
         <div className="actions">
           <button type="button">Open Preview</button>
+          <a href="/login" className="hero-login-btn">
+            Login with TUM ID
+          </a>
           <a href="#" className="text-link">
             See sample workflow
           </a>
