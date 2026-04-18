@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 export function TopBar() {
   return (
     <header className="home-topbar">
@@ -11,9 +13,11 @@ export function TopBar() {
         <span>Campus</span>
       </nav>
 
-      <div className="home-top-actions" aria-hidden="true">
+      <div className="home-top-actions">
         <div className="home-search-icon">⌕</div>
-        <div className="home-avatar">TUM</div>
+        <Link href="/login" className="home-avatar" aria-label="Login with TUM ID">
+          TUM
+        </Link>
       </div>
     </header>
   );

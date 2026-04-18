@@ -730,6 +730,12 @@ body.loginPage::after {
   font-size: 0.72rem;
   font-weight: 700;
   color: #12575e;
+  text-decoration: none;
+}
+
+.home-avatar:focus-visible {
+  outline: 2px solid rgba(9, 91, 98, 0.45);
+  outline-offset: 2px;
 }
 
 .home-grid {
