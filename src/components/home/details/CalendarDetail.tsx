@@ -19,6 +19,9 @@ export function CalendarDetail() {
                     <a
                       href={`https://nav.tum.de/search?q=${encodeURIComponent(entry.room)}`}
                       className="calendar-room-link"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(event) => event.stopPropagation()}
                     >
                       {entry.room}
                     </a>
