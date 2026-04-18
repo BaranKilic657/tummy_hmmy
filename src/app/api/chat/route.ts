@@ -14,7 +14,7 @@ type BedrockMessage = {
 
 export async function POST(request: Request) {
   try {
-    const apiKey = process.env.BEDROCK_API_KEY;
+    const apiKey = process.env.AWS_BEARER_TOKEN;
     const region = process.env.BEDROCK_REGION ?? "us-east-1";
     const modelId = process.env.BEDROCK_MODEL_ID ?? "us.anthropic.claude-3-5-haiku-20241022-v1:0";
 
