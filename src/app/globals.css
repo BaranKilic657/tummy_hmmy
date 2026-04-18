@@ -1666,6 +1666,23 @@ body.loginPage::after {
   gap: 0.72rem;
 }
 
+.copilot-chat-detail {
+  gap: 0.62rem;
+}
+
+.copilot-detail-messages {
+  max-height: 52vh;
+  min-height: 280px;
+  border: 1px solid rgba(10, 93, 99, 0.2);
+  border-radius: 12px;
+  background: rgba(250, 255, 255, 0.86);
+  padding: 0.65rem;
+}
+
+.copilot-detail-form {
+  margin-top: 0;
+}
+
 .copilot-detail .navigator-form,
 .copilot-detail .navigator-results,
 .copilot-detail .navigator-detail,

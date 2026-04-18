@@ -1,170 +1,44 @@
 "use client";
 
-import Link from "next/link";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent } from "react";
 
-import type {
-  PublicNavigatumLocationPayload,
-  PublicNavigatumSearchEntry,
-  PublicNavigatumSearchPayload,
-} from "@/lib/public-campus-types";
+import { useCopilotChat } from "../copilot/useCopilotChat";
 
 export function CopilotDetail() {
-  const [query, setQuery] = useState("garching");
-  const [results, setResults] = useState<PublicNavigatumSearchEntry[]>([]);
-  const [selectedLocation, setSelectedLocation] = useState<PublicNavigatumLocationPayload | null>(null);
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    void runSearch("garching");
-  }, []);
-
-  async function runSearch(searchQuery: string) {
-    const normalizedQuery = searchQuery.trim();
-
-    if (!normalizedQuery) {
-      setResults([]);
-      setSelectedLocation(null);
-      return;
-    }
-
-    setIsLoading(true);
-    setError("");
-
-    try {
-      const response = await fetch(
-        `/api/public/navigatum/search?q=${encodeURIComponent(normalizedQuery)}&limit=5`,
-      );
-      const payload = (await response.json()) as PublicNavigatumSearchPayload | ApiErrorPayload;
-
-      if (!response.ok) {
-        throw new Error(getApiErrorMessage(payload, "Suche fehlgeschlagen."));
-      }
-
-      const nextResults = flattenSearchResults(payload as PublicNavigatumSearchPayload);
-      setResults(nextResults);
-
-      if (nextResults[0]) {
-        await loadLocation(nextResults[0].id);
-      } else {
-        setSelectedLocation(null);
-      }
-    } catch (searchError) {
-      setError(searchError instanceof Error ? searchError.message : "Suche fehlgeschlagen.");
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  async function loadLocation(id: string) {
-    const response = await fetch(`/api/public/navigatum/locations/${encodeURIComponent(id)}`);
-    const payload = (await response.json()) as PublicNavigatumLocationPayload | ApiErrorPayload;
-
-    if (!response.ok) {
-      throw new Error(getApiErrorMessage(payload, "Ort konnte nicht geladen werden."));
-    }
-
-    setSelectedLocation(payload as PublicNavigatumLocationPayload);
-  }
+  const { messages, input, setInput, isLoading, error, sendCurrentInput } = useCopilotChat();
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    await runSearch(query);
+    await sendCurrentInput();
   }
 
   return (
-    <section className="copilot-detail">
-      <p className="detail-subtitle">Assistant shortcuts plus live campus search via NavigaTUM.</p>
+    <section className="copilot-detail copilot-chat-detail">
+      <p className="detail-subtitle">Full chat history</p>
 
-      <div className="detail-actions">
-        <Link href="/chatbot" className="detail-link">
-          Open assistant chat
-        </Link>
-        <a href="https://nav.tum.de" target="_blank" rel="noopener noreferrer" className="detail-link">
-          Open NavigaTUM
-        </a>
+      <div className="chat-messages copilot-detail-messages" aria-live="polite">
+        {messages.map((message, index) => (
+          <article key={`${message.role}-${index}`} className={`chat-bubble chat-${message.role}`}>
+            <p>{message.content}</p>
+          </article>
+        ))}
+        {isLoading ? <p className="chat-loading">Loading response...</p> : null}
       </div>
 
-      <form className="navigator-form" onSubmit={onSubmit}>
+      <form className="chat-form copilot-detail-form" onSubmit={onSubmit}>
         <input
-          type="search"
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-          placeholder="z. B. garching, mi, audimax"
-          aria-label="Campus-Suche"
+          type="text"
+          value={input}
+          onChange={(event) => setInput(event.target.value)}
+          placeholder="Ask your copilot..."
+          aria-label="Ask your copilot"
         />
-        <button type="submit" aria-label="Suche starten">
-          →
+        <button type="submit" disabled={isLoading}>
+          Send
         </button>
       </form>
 
-      {isLoading ? <p className="widget-state">NavigaTUM wird geladen...</p> : null}
-      {error ? <p className="widget-error">{error}</p> : null}
-
-      {results.length > 0 ? (
-        <div className="navigator-results" aria-label="NavigaTUM Ergebnisse">
-          {results.map((entry) => (
-            <button
-              key={entry.id}
-              type="button"
-              className="navigator-result"
-              onClick={() => {
-                void loadLocation(entry.id).catch((loadError) => {
-                  setError(loadError instanceof Error ? loadError.message : "Ort konnte nicht geladen werden.");
-                });
-              }}
-            >
-              <strong>{entry.name}</strong>
-              <small>{entry.subtext ?? entry.type}</small>
-            </button>
-          ))}
-        </div>
-      ) : null}
-
-      {selectedLocation ? (
-        <div className="navigator-detail">
-          <strong>{selectedLocation.name}</strong>
-          <p>
-            {selectedLocation.typeCommonName ?? selectedLocation.type}
-            {selectedLocation.address ? ` · ${selectedLocation.address}` : ""}
-          </p>
-          {selectedLocation.parents.length > 0 ? (
-            <span className="widget-chip">{selectedLocation.parents.join(" · ")}</span>
-          ) : null}
-          {selectedLocation.redirectUrl ? (
-            <a
-              href={selectedLocation.redirectUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="navigator-link"
-            >
-              In NavigaTUM öffnen
-            </a>
-          ) : null}
-        </div>
-      ) : null}
+      {error ? <p className="chat-error">{error}</p> : null}
     </section>
   );
-}
-
-function flattenSearchResults(payload: PublicNavigatumSearchPayload) {
-  return payload.sections.flatMap((section) => section.entries).slice(0, 5);
-}
-
-type ApiErrorPayload = {
-  error?: string;
-};
-
-function getApiErrorMessage(payload: unknown, fallback: string) {
-  if (
-    payload &&
-    typeof payload === "object" &&
-    "error" in payload &&
-    typeof payload.error === "string"
-  ) {
-    return payload.error;
-  }
-
-  return fallback;
 }
