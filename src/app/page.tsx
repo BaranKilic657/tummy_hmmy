@@ -9,7 +9,7 @@ export default function HomePage() {
         <nav className="nav" aria-label="Main navigation">
           <a href="#">Overview</a>
           <a href="#">How It Works</a>
-          <a href="#">Demo</a>
+          <a href="/tictactoe">Tic-Tac-Toe</a>
         </nav>
       </header>
 
