@@ -2,6 +2,7 @@
 
 import { Fragment, useEffect, useMemo, useState, type ReactNode } from "react";
 import { CalendarDetail } from "../components/home/details/CalendarDetail";
+import { CopilotDetail } from "../components/home/details/CopilotDetail";
 import { MensaDetail } from "../components/home/details/MensaDetail";
 import { MoodleDetail } from "../components/home/details/MoodleDetail";
 import { TopBar } from "../components/home/TopBar";
@@ -11,9 +12,17 @@ import { CalendarTile } from "../components/home/tiles/CalendarTile";
 import { CopilotTile } from "../components/home/tiles/CopilotTile";
 import { MensaTile } from "../components/home/tiles/MensaTile";
 import { MoodleTile } from "../components/home/tiles/MoodleTile";
+import { TransitTile } from "../components/home/tiles/TransitTile";
 import { TumOnlineTile } from "../components/home/tiles/TumOnlineTile";
 
-type DashboardTileId = "copilot" | "calendar" | "moodle" | "tumonline" | "mensa" | "automations";
+type DashboardTileId =
+  | "copilot"
+  | "calendar"
+  | "moodle"
+  | "tumonline"
+  | "mensa"
+  | "transit"
+  | "automations";
 
 type TileSpec = {
   id: DashboardTileId;
@@ -23,6 +32,7 @@ type TileSpec = {
 const TILE_SPECS: TileSpec[] = [
   { id: "moodle", weight: 2 },
   { id: "calendar", weight: 3 },
+  { id: "transit", weight: 2 },
   { id: "mensa", weight: 2 },
   { id: "tumonline", weight: 1 },
 ];
@@ -33,6 +43,7 @@ const TILE_TITLES: Record<DashboardTileId, string> = {
   moodle: "Moodle",
   tumonline: "TUMonline",
   mensa: "Cafeteria",
+  transit: "Garching U-Bahn",
   automations: "Automation",
 };
 
@@ -77,6 +88,8 @@ export default function HomePage() {
         return <TumOnlineTile />;
       case "mensa":
         return <MensaTile />;
+      case "transit":
+        return <TransitTile />;
       case "automations":
         return <AutomationsTile />;
       default:
@@ -85,6 +98,9 @@ export default function HomePage() {
   };
 
   const renderFocusContent = (tileId: DashboardTileId): ReactNode => {
+    if (tileId === "copilot") {
+      return <CopilotDetail />;
+    }
     if (tileId === "calendar") {
       return <CalendarDetail />;
     }
@@ -93,6 +109,9 @@ export default function HomePage() {
     }
     if (tileId === "mensa") {
       return <MensaDetail />;
+    }
+    if (tileId === "transit") {
+      return <TransitTile variant="detail" />;
     }
     return renderDashboardTile(tileId);
   };
