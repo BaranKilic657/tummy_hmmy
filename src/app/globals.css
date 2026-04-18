@@ -846,16 +846,6 @@ body.loginPage::after {
   cursor: pointer;
 }
 
-.home-columns .tile-moodle {
-  flex: 1 1 auto;
-  display: flex;
-}
-
-.home-columns .tile-moodle > .widget {
-  width: 100%;
-  min-height: 100%;
-}
-
 .tile-click-target:focus-visible {
   outline: 2px solid #1295a2;
   outline-offset: 3px;

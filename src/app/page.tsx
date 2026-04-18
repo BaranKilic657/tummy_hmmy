@@ -127,7 +127,9 @@ export default function HomePage() {
     const columns: TileSpec[][] = [[], []];
     const heights = [0, 0];
 
-    for (const spec of TILE_SPECS.filter((tile) => tile.id !== "copilot" && tile.id !== "calendar")) {
+    for (const spec of TILE_SPECS.filter(
+      (tile) => tile.id !== "copilot" && tile.id !== "calendar" && tile.id !== "moodle" && tile.id !== "transit",
+    )) {
       const targetColumnIndex = heights[0] <= heights[1] ? 0 : 1;
       columns[targetColumnIndex].push(spec);
       heights[targetColumnIndex] += spec.weight;
@@ -197,6 +199,26 @@ export default function HomePage() {
           </div>
 
           <div className="home-col">
+            {(["moodle", "transit"] as const).map((tileId) => (
+              <Fragment key={tileId}>
+                <div
+                  className={`tile-click-target tile-${tileId}`}
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => setActiveTile(tileId)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      setActiveTile(tileId);
+                    }
+                  }}
+                  aria-label={`Open ${TILE_TITLES[tileId]}`}
+                >
+                  {renderDashboardTile(tileId)}
+                </div>
+              </Fragment>
+            ))}
+
             {balancedColumns[1].map((tile) => (
               <Fragment key={tile.id}>
                 <div
