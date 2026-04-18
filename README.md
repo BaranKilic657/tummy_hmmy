@@ -1,5 +1,5 @@
 # TUM.ai Makeathon 2026 — Winning Strategy README
-
+hallo
 ## Purpose
 This README turns the Reply challenge brief into a practical, competition-ready guide for building a project that can **score highly across all judging dimensions** and feel genuinely aligned with what the organizers want.
 
