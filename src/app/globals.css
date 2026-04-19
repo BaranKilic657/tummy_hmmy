@@ -22,6 +22,10 @@ body {
   animation: gradient-orbit 14s linear infinite;
 }
 
+body.home-focus-open {
+  overflow: hidden;
+}
+
 body::before,
 body::after {
   content: "";
@@ -255,6 +259,161 @@ body.loginPage::after {
   color: rgba(18, 84, 90, 0.72);
 }
 
+.auth-gate-screen {
+  display: grid;
+  place-items: center;
+}
+
+.auth-gate-shell {
+  width: min(100%, 960px);
+  border-radius: 28px;
+  padding: clamp(1.35rem, 2.8vw, 2.8rem);
+  background: rgba(248, 252, 252, 0.9);
+  border: 1px solid rgba(12, 79, 84, 0.16);
+  box-shadow: 0 18px 42px rgba(3, 24, 29, 0.2);
+  color: #103a3f;
+  backdrop-filter: blur(4px);
+}
+
+.auth-gate-tag {
+  margin: 0;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: rgba(17, 72, 77, 0.8);
+  font-family: "Space Grotesk", "Avenir Next", "Segoe UI", sans-serif;
+}
+
+.auth-gate-shell h1 {
+  margin: 0.8rem 0 0;
+  max-width: 22ch;
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+  line-height: 1.04;
+  letter-spacing: -0.018em;
+  font-family: "Space Grotesk", "Avenir Next", "Segoe UI", sans-serif;
+}
+
+.auth-gate-subtitle {
+  margin: 1rem 0 0;
+  max-width: 64ch;
+  color: rgba(19, 63, 67, 0.86);
+  line-height: 1.62;
+}
+
+.auth-gate-actions {
+  margin-top: 1.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.95rem;
+  flex-wrap: wrap;
+}
+
+.auth-gate-primary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.7rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: 10px;
+  border: 1px solid rgba(12, 74, 79, 0.35);
+  background: #ffffff;
+  color: #123f44;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-gate-primary-btn:hover {
+  background: #f5fbfb;
+}
+
+.auth-gate-primary-btn:focus-visible {
+  outline: 2px solid rgba(14, 90, 96, 0.45);
+  outline-offset: 2px;
+}
+
+.auth-gate-secondary-btn {
+  min-height: 2.7rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(12, 74, 79, 0.22);
+  background: rgba(245, 251, 251, 0.85);
+  color: #18464b;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auth-gate-secondary-btn:hover {
+  background: #eef7f7;
+}
+
+.auth-gate-secondary-btn:focus-visible {
+  outline: 2px solid rgba(14, 90, 96, 0.32);
+  outline-offset: 2px;
+}
+
+.guest-mode-banner {
+  margin: 0.35rem 0 0.8rem;
+  border: 1px solid rgba(166, 123, 24, 0.35);
+  border-radius: 10px;
+  background: rgba(255, 249, 227, 0.92);
+  color: #6b520c;
+  padding: 0.5rem 0.6rem;
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.guest-dashboard-banner {
+  margin: 0 0 0.8rem;
+  border: 1px solid rgba(170, 123, 24, 0.35);
+  border-radius: 10px;
+  background: rgba(255, 249, 227, 0.92);
+  color: #6b520c;
+  padding: 0.48rem 0.6rem;
+  font-size: 0.83rem;
+  line-height: 1.4;
+}
+
+.auth-gate-hint {
+  margin: 0;
+  font-size: 0.88rem;
+  color: rgba(29, 77, 82, 0.82);
+}
+
+.auth-gate-highlights {
+  margin-top: 1.75rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.auth-gate-highlights article {
+  border: 1px solid rgba(13, 86, 91, 0.16);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 0.8rem;
+}
+
+.auth-gate-highlights h2 {
+  margin: 0;
+  font-size: 1.02rem;
+  color: #114046;
+}
+
+.auth-gate-highlights p {
+  margin: 0.55rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: rgba(24, 70, 75, 0.85);
+}
+
+.auth-gate-loading {
+  min-height: 220px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-weight: 600;
+}
+
 @media (max-width: 640px) {
   .screen {
     padding: 0.85rem 0.75rem 1.5rem;
@@ -276,6 +435,14 @@ body.loginPage::after {
 
   .hero h1 {
     font-size: clamp(1.6rem, 8vw, 2.25rem);
+  }
+
+  .auth-gate-shell {
+    border-radius: 20px;
+  }
+
+  .auth-gate-highlights {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -422,6 +589,17 @@ body.loginPage::after {
 
 .tum-sp-info a {
   color: #1f5f8f;
+}
+
+.login-error-banner {
+  margin: 0.55rem 0 0.85rem;
+  border: 1px solid rgba(170, 34, 34, 0.32);
+  border-radius: 8px;
+  background: rgba(255, 239, 239, 0.95);
+  color: #8f1f1f;
+  padding: 0.5rem 0.62rem;
+  font-size: 0.86rem;
+  line-height: 1.35;
 }
 
 .tum-login-form {
@@ -652,6 +830,200 @@ body.loginPage::after {
   font-size: 0.92rem;
 }
 
+.chat-toolbar {
+  margin-top: 0.45rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.chat-secondary-btn {
+  height: 2rem;
+  padding: 0 0.72rem;
+  border-radius: 10px;
+  border: 1px solid rgba(8, 92, 99, 0.26);
+  background: rgba(241, 253, 254, 0.9);
+  color: #0d535a;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.chat-secondary-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.agent-actions-panel {
+  margin-top: 0.85rem;
+  border: 1px solid rgba(11, 82, 88, 0.22);
+  border-radius: 12px;
+  background: rgba(246, 255, 255, 0.9);
+  padding: 0.6rem;
+}
+
+.agent-actions-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.agent-actions-head h3 {
+  margin: 0;
+  font-size: 0.92rem;
+  color: #0e4c52;
+}
+
+.agent-actions-head span {
+  border-radius: 999px;
+  border: 1px solid rgba(11, 86, 92, 0.24);
+  background: rgba(255, 255, 255, 0.76);
+  padding: 0.12rem 0.5rem;
+  font-size: 0.72rem;
+  color: #0b4c53;
+}
+
+.agent-actions-status {
+  margin: 0.5rem 0 0;
+  color: #0e5056;
+  font-size: 0.85rem;
+}
+
+.agent-actions-empty {
+  margin: 0.5rem 0 0;
+  color: #33646b;
+  font-size: 0.88rem;
+}
+
+.agent-actions-list {
+  margin-top: 0.55rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.agent-action-card {
+  border: 1px solid rgba(11, 84, 89, 0.2);
+  border-radius: 10px;
+  background: rgba(254, 255, 255, 0.95);
+  padding: 0.5rem;
+}
+
+.agent-action-type {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.68rem;
+  color: rgba(12, 80, 86, 0.78);
+}
+
+.agent-action-summary {
+  margin: 0.2rem 0 0;
+  color: #09363b;
+  font-size: 0.88rem;
+}
+
+.agent-action-buttons {
+  margin-top: 0.45rem;
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.agent-actions-examples {
+  margin-top: 0.65rem;
+  border-top: 1px solid rgba(12, 83, 89, 0.16);
+  padding-top: 0.5rem;
+}
+
+.agent-actions-examples p {
+  margin: 0.25rem 0;
+  font-size: 0.82rem;
+  color: #27575d;
+}
+
+.chat-debug-panel {
+  margin-top: 0.7rem;
+  border: 1px solid rgba(11, 82, 88, 0.22);
+  border-radius: 12px;
+  background: rgba(246, 255, 255, 0.9);
+  padding: 0.5rem 0.6rem;
+}
+
+.chat-debug-panel-active {
+  border-color: rgba(10, 91, 98, 0.36);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+
+.chat-debug-panel summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: #0a4f55;
+}
+
+.chat-debug-meta {
+  margin-top: 0.45rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem;
+}
+
+.chat-debug-meta span {
+  border-radius: 999px;
+  border: 1px solid rgba(11, 86, 92, 0.24);
+  background: rgba(255, 255, 255, 0.76);
+  padding: 0.2rem 0.54rem;
+  font-size: 0.72rem;
+  color: #0b4c53;
+}
+
+.chat-debug-empty {
+  margin: 0.5rem 0 0;
+  color: #33646b;
+  font-size: 0.88rem;
+}
+
+.chat-debug-grid {
+  margin-top: 0.55rem;
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.chat-debug-section {
+  margin-top: 0;
+  border: 1px solid rgba(11, 84, 89, 0.2);
+  border-radius: 10px;
+  background: rgba(254, 255, 255, 0.95);
+  padding: 0.45rem;
+}
+
+.chat-debug-section h4 {
+  margin: 0 0 0.3rem;
+  font-size: 0.78rem;
+  color: #0c4a50;
+  letter-spacing: 0.01em;
+}
+
+.chat-debug-section pre {
+  margin: 0;
+  padding: 0.58rem;
+  border-radius: 8px;
+  max-height: 360px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #f0fbfc;
+  border: 1px solid rgba(9, 81, 86, 0.2);
+  color: #083035;
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+
+@media (min-width: 1000px) {
+  .chat-debug-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 .home-screen {
   display: grid;
   place-items: center;
@@ -800,11 +1172,15 @@ body.loginPage::after {
 }
 
 .home-profile-item {
+  width: 100%;
+  text-align: left;
   border: 1px solid transparent;
   border-radius: 10px;
   padding: 0.45rem 0.5rem;
   color: #14464d;
   text-decoration: none;
+  background: transparent;
+  cursor: pointer;
   font-size: 0.86rem;
   transition: background 0.15s ease, border-color 0.15s ease;
 }
@@ -1557,6 +1933,39 @@ body.loginPage::after {
   font-weight: 600;
 }
 
+.calendar-detail-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.7rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.calendar-week-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.calendar-week-nav button {
+  border: 1px solid rgba(10, 94, 100, 0.28);
+  background: #ebfdfb;
+  color: #0f5057;
+  border-radius: 999px;
+  padding: 0.28rem 0.62rem;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.78rem;
+}
+
+.calendar-week-nav span {
+  color: rgba(12, 72, 78, 0.86);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
 .calendar-week-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -1566,7 +1975,7 @@ body.loginPage::after {
 .calendar-custom-form {
   margin: 0 0 0.72rem;
   display: grid;
-  grid-template-columns: 1fr 0.7fr 0.7fr 1.3fr 0.9fr auto;
+  grid-template-columns: 0.95fr 0.95fr 1fr 0.75fr 0.75fr 1.3fr 0.95fr auto auto;
   gap: 0.45rem;
 }
 
@@ -1598,6 +2007,53 @@ body.loginPage::after {
   opacity: 0.92;
 }
 
+.calendar-form-ghost-btn {
+  border: 1px solid rgba(10, 94, 100, 0.24);
+  background: rgba(245, 255, 255, 0.92);
+  color: #0f5057;
+}
+
+.calendar-course-edit-form {
+  margin: 0 0 0.72rem;
+  border: 1px solid rgba(8, 88, 93, 0.2);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.94);
+  padding: 0.6rem;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 0.9fr auto auto;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.calendar-course-edit-form strong {
+  grid-column: 1 / -1;
+  color: #0d4349;
+  font-size: 0.84rem;
+}
+
+.calendar-course-edit-form input {
+  min-width: 0;
+  height: 2rem;
+  border-radius: 10px;
+  border: 1px solid rgba(11, 91, 97, 0.22);
+  background: rgba(248, 255, 255, 0.96);
+  color: #0f4c53;
+  padding: 0 0.55rem;
+  font-size: 0.8rem;
+}
+
+.calendar-course-edit-form button {
+  border: 1px solid rgba(10, 94, 100, 0.3);
+  background: #0f6168;
+  color: #f1ffff;
+  border-radius: 10px;
+  height: 2rem;
+  padding: 0 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 .calendar-day-col {
   border: 1px solid rgba(8, 88, 93, 0.2);
   border-radius: 14px;
@@ -1610,6 +2066,14 @@ body.loginPage::after {
   color: #0d4349;
   font-size: 0.88rem;
   letter-spacing: 0.01em;
+  display: grid;
+  gap: 0.12rem;
+}
+
+.calendar-day-col h4 small {
+  color: rgba(12, 74, 80, 0.76);
+  font-size: 0.72rem;
+  font-weight: 600;
 }
 
 .calendar-day-list {
@@ -1654,6 +2118,67 @@ body.loginPage::after {
   opacity: 0.86;
 }
 
+.calendar-custom-list {
+  margin-top: 0.85rem;
+  border: 1px solid rgba(8, 88, 93, 0.2);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 0.65rem;
+}
+
+.calendar-custom-list h4 {
+  margin: 0;
+  color: #0d4349;
+  font-size: 0.88rem;
+}
+
+.calendar-custom-list ul {
+  margin: 0.55rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.calendar-custom-list li {
+  border: 1px solid rgba(8, 88, 93, 0.17);
+  border-radius: 10px;
+  background: rgba(248, 255, 255, 0.95);
+  padding: 0.48rem 0.56rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.calendar-custom-list li strong {
+  color: #0d4349;
+  font-size: 0.82rem;
+}
+
+.calendar-custom-list li p {
+  margin: 0.16rem 0 0;
+  color: rgba(12, 74, 80, 0.86);
+  font-size: 0.75rem;
+}
+
+.calendar-entry-actions {
+  display: flex;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+.calendar-entry-actions button {
+  border: 1px solid rgba(9, 93, 99, 0.25);
+  border-radius: 999px;
+  background: #edfffd;
+  color: #0f535a;
+  padding: 0.26rem 0.56rem;
+  cursor: pointer;
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
 .detail-subtitle {
   margin: 0 0 0.72rem;
   color: rgba(14, 78, 84, 0.88);
@@ -1670,17 +2195,73 @@ body.loginPage::after {
   gap: 0.62rem;
 }
 
+.copilot-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
 .copilot-detail-messages {
-  max-height: 52vh;
-  min-height: 280px;
+  flex: 1 1 auto;
+  max-height: none;
+  min-height: 0;
   border: 1px solid rgba(10, 93, 99, 0.2);
   border-radius: 12px;
   background: rgba(250, 255, 255, 0.86);
   padding: 0.65rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable both-edges;
+  scroll-behavior: smooth;
+}
+
+.copilot-detail-messages::-webkit-scrollbar {
+  width: 11px;
+}
+
+.copilot-detail-messages::-webkit-scrollbar-track {
+  background: rgba(233, 250, 251, 0.7);
+  border-radius: 999px;
+}
+
+.copilot-detail-messages::-webkit-scrollbar-thumb {
+  background: rgba(16, 103, 110, 0.45);
+  border-radius: 999px;
+  border: 2px solid rgba(233, 250, 251, 0.7);
+}
+
+.copilot-jump-wrap {
+  margin-top: -0.2rem;
+  display: flex;
+  justify-content: center;
 }
 
 .copilot-detail-form {
   margin-top: 0;
+}
+
+.copilot-detail-form-sticky {
+  padding: 0.55rem;
+  border-radius: 12px;
+  border: 1px solid rgba(10, 93, 99, 0.18);
+  background: rgba(244, 255, 255, 0.96);
+}
+
+.agent-actions-summary-row {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-weight: 700;
+  color: #0a4f55;
+}
+
+.agent-actions-summary-row::-webkit-details-marker {
+  display: none;
 }
 
 .copilot-detail .navigator-form,
@@ -1778,11 +2359,15 @@ body.loginPage::after {
   left: 50%;
   top: 7vh;
   width: min(94vw, 980px);
+  max-height: 90vh;
   border-radius: 20px;
   border: 1px solid rgba(8, 89, 95, 0.28);
   background: rgba(241, 255, 255, 0.98);
   box-shadow: 0 26px 78px rgba(2, 32, 36, 0.35);
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   transform: translateX(-50%) translateY(16px) scale(0.96);
   opacity: 0;
   transition: transform 0.28s cubic-bezier(0.2, 0.75, 0.2, 1), opacity 0.28s ease;
@@ -1823,6 +2408,28 @@ body.loginPage::after {
 
 .focus-body .widget {
   min-height: 0;
+}
+
+.focus-body {
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow: auto;
+}
+
+.focus-body .copilot-detail {
+  height: 100%;
+  min-height: 0;
+}
+
+.focus-body .copilot-chat-detail {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.focus-body .agent-actions-panel {
+  max-height: 30vh;
+  overflow: auto;
 }
 
 .focus-body .widget-calendar .calendar-preview-hint {
@@ -1927,6 +2534,19 @@ body.loginPage::after {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .calendar-course-edit-form {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-custom-list li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .calendar-entry-actions {
+    width: 100%;
+  }
+
   .mensa-detail-top {
     flex-wrap: wrap;
   }
@@ -1943,7 +2563,20 @@ body.loginPage::after {
   .focus-modal {
     top: 4vh;
     max-height: 92vh;
-    overflow: auto;
+    overflow: hidden;
+  }
+
+  .copilot-detail-messages {
+    min-height: 220px;
+    max-height: none;
+  }
+
+  .copilot-detail-form-sticky {
+    position: static;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    backdrop-filter: none;
   }
 
   .transit-item {

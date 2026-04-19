@@ -1,22 +1,32 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { getAccountTypeFromStorage } from "@/lib/auth-session";
 
 type Message = {
   role: "user" | "assistant";
   content: string;
 };
 
+const INITIAL_MESSAGES: Message[] = [
+  {
+    role: "assistant",
+    content: "Hi, I am your simple chatbot. Send me a message.",
+  },
+];
+
+const GUEST_NOTICE_MESSAGE: Message = {
+  role: "assistant",
+  content:
+    "Guest account notice: This is a demo guest account. Information may be outdated, and some functions may not work reliably.",
+};
+
 export default function ChatbotPage() {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: "assistant",
-      content: "Hi, I am your simple chatbot. Send me a message.",
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>(() => getInitialMessages());
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const isGuest = getAccountTypeFromStorage() === "guest";
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -33,13 +43,15 @@ export default function ChatbotPage() {
     setIsLoading(true);
 
     try {
+      const requestPayload = { messages: nextMessages, guestMode: isGuest };
+
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: nextMessages }),
+        body: JSON.stringify(requestPayload),
       });
 
-      const data = await response.json();
+      const data = (await response.json()) as { error?: string; reply?: string };
 
       if (!response.ok) {
         throw new Error(typeof data?.error === "string" ? data.error : "API error");
@@ -59,10 +71,27 @@ export default function ChatbotPage() {
     }
   };
 
+  const clearChat = () => {
+    setMessages(INITIAL_MESSAGES);
+    setInput("");
+    setError("");
+  };
+
   return (
     <main className="screen chat-screen">
       <section className="chat-card">
         <h1>Chatbot</h1>
+        {isGuest ? (
+          <p className="guest-mode-banner">
+            Guest mode: responses and features are demo-only and may be incomplete or inaccurate.
+          </p>
+        ) : null}
+
+          <div className="chat-toolbar">
+            <button type="button" className="chat-secondary-btn" onClick={clearChat} disabled={isLoading}>
+              Clear Chat
+            </button>
+          </div>
 
         <div className="chat-messages" aria-live="polite">
           {messages.map((message, index) => (
@@ -90,4 +119,14 @@ export default function ChatbotPage() {
       </section>
     </main>
   );
+}
+
+function getInitialMessages(): Message[] {
+  if (typeof window === "undefined") {
+    return INITIAL_MESSAGES;
+  }
+
+  return sessionStorage.getItem("accountType") === "guest"
+    ? [GUEST_NOTICE_MESSAGE, ...INITIAL_MESSAGES]
+    : INITIAL_MESSAGES;
 }
