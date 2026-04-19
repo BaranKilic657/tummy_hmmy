@@ -47,7 +47,7 @@ export function TopBar({ title, accountType = "member" }: TopBarProps) {
         <div className="home-search-icon">⌕</div>
         <div className="home-profile-menu">
           <Link
-            href={isLoggedIn ? "/" : "/login"}
+            href={isLoggedIn ? "/" : "/idp/profile/SAML2/Redirect/SSO?execution=e2s1"}
             className={`home-avatar ${isLoggedIn ? "home-avatar-large" : ""}`}
             aria-label={isLoggedIn ? "Open profile" : "Login with TUM ID"}
           >
@@ -70,7 +70,7 @@ export function TopBar({ title, accountType = "member" }: TopBarProps) {
                 Assistant
               </Link>
               {accountType !== "guest" ? (
-                <Link href="/login" className="home-profile-item" role="menuitem">
+                <Link href="/idp/profile/SAML2/Redirect/SSO?execution=e2s1" className="home-profile-item" role="menuitem">
                   Settings
                 </Link>
               ) : null}

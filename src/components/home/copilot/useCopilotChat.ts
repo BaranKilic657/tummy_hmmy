@@ -19,7 +19,7 @@ type CalendarAddAction = {
   room: string;
 };
 
-const CHAT_STORAGE_KEY = "tummy.copilot.chat-history.v1";
+const CHAT_STORAGE_KEY_PREFIX = "tummy.copilot.chat-history";
 const CHAT_UPDATED_EVENT = "tummy:copilot-chat-updated";
 const COURSE_WATCHLIST_STORAGE_KEY = "tummy.course.watchlist.v1";
 const COURSE_REG_REQUEST_STORAGE_KEY = "tummy.course.registration.requests.v1";
@@ -50,13 +50,22 @@ export function useCopilotChat() {
 
   useEffect(() => {
     setAccountType(getAccountTypeFromStorage());
-    setMessages(ensureGuestNotice(loadMessagesFromStorage()));
+    const mode = getAccountTypeFromStorage();
+    setMessages(ensureGuestNotice(loadMessagesFromStorage(mode), mode));
   }, []);
 
   useEffect(() => {
-    const sync = () => setMessages(loadMessagesFromStorage());
+    const sync = () => {
+      const mode = getAccountTypeFromStorage();
+      setAccountType(mode);
+      setMessages(ensureGuestNotice(loadMessagesFromStorage(mode), mode));
+    };
     window.addEventListener(CHAT_UPDATED_EVENT, sync);
-    return () => window.removeEventListener(CHAT_UPDATED_EVENT, sync);
+    window.addEventListener("auth-state-changed", sync);
+    return () => {
+      window.removeEventListener(CHAT_UPDATED_EVENT, sync);
+      window.removeEventListener("auth-state-changed", sync);
+    };
   }, []);
 
   useEffect(() => {
@@ -87,8 +96,12 @@ export function useCopilotChat() {
       return;
     }
 
+    const mode = getAccountTypeFromStorage();
+    const guestMode = mode === "guest";
+    setAccountType(mode);
+
     const nextMessages: ChatMessage[] = [...messages, { role: "user", content: normalizedText }];
-    persistMessages(nextMessages);
+    persistMessages(nextMessages, mode);
     setMessages(nextMessages);
     setError("");
     setIsLoading(true);
@@ -97,7 +110,7 @@ export function useCopilotChat() {
       const requestPayload = {
         messages: nextMessages,
         calendarEvents: getCustomCalendarEntries(),
-        guestMode: accountType === "guest",
+        guestMode,
       };
 
       const response = await fetch("/api/chat", {
@@ -120,8 +133,7 @@ export function useCopilotChat() {
       const parsed = parseCopilotAction(parsedActions.displayText);
       let finalMessage = parsed.displayText;
       const declaredActions = parsedActions.actions;
-      const inferredActions =
-        accountType === "guest" ? [] : inferFallbackAgentActions(normalizedText, parsed.displayText, declaredActions);
+      const inferredActions = guestMode ? [] : inferFallbackAgentActions(normalizedText, parsed.displayText, declaredActions);
       const fallbackAction = !parsed.calendarAdd ? inferCalendarAddFromText(normalizedText, parsed.displayText) : null;
       const actionToExecute = parsed.calendarAdd ?? fallbackAction;
       const synthesizedCalendarAction = actionToExecute
@@ -138,7 +150,7 @@ export function useCopilotChat() {
         : null;
       const mergedActions = [...declaredActions, ...inferredActions];
       const nextActions =
-        accountType === "guest"
+        guestMode
           ? []
           : dedupeAgentActions(synthesizedCalendarAction ? [...mergedActions, synthesizedCalendarAction] : mergedActions);
 
@@ -148,7 +160,7 @@ export function useCopilotChat() {
       }
 
       const withAssistant: ChatMessage[] = [...nextMessages, { role: "assistant", content: finalMessage }];
-      persistMessages(withAssistant);
+      persistMessages(withAssistant, mode);
       setMessages(withAssistant);
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : "Chat request failed.");
@@ -158,8 +170,10 @@ export function useCopilotChat() {
   }
 
   function clearChat() {
-    persistMessages(INITIAL_MESSAGES);
-    setMessages(INITIAL_MESSAGES);
+    const mode = getAccountTypeFromStorage();
+    const next = ensureGuestNotice(INITIAL_MESSAGES, mode);
+    persistMessages(next, mode);
+    setMessages(next);
     setInput("");
     setError("");
     setPendingActions([]);
@@ -186,6 +200,7 @@ export function useCopilotChat() {
     setActionStatus(statusText);
     setPendingActions((current) => current.filter((item) => item.id !== actionId));
 
+    const mode = getAccountTypeFromStorage();
     const withAssistant: ChatMessage[] = [
       ...messages,
       {
@@ -193,7 +208,7 @@ export function useCopilotChat() {
         content: result.ok ? `Action completed: ${result.message}` : `Action failed: ${result.message}`,
       },
     ];
-    persistMessages(withAssistant);
+    persistMessages(withAssistant, mode);
     setMessages(withAssistant);
   }
 
@@ -292,6 +307,7 @@ async function executeAgentAction(
         endTime: action.endTime,
         module: action.title,
         room: action.room,
+        recurrence: "weekly",
       });
 
       return result.ok
@@ -708,6 +724,13 @@ function toIcsDateTime(date: Date) {
   ).padStart(2, "0")}${String(date.getMinutes()).padStart(2, "0")}00`;
 }
 
+function toDateInputValue(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 function escapeIcsText(value: string) {
   return value.replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n");
 }
@@ -750,6 +773,8 @@ function syncReminderToWeeklyCalendar(
     endTime,
     module: moduleTitle,
     room,
+    recurrence: "once",
+    dateIso: toDateInputValue(parsed),
   });
 
   if (!result.ok) {
@@ -788,13 +813,13 @@ function isValidEmail(value: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 }
 
-function loadMessagesFromStorage() {
+function loadMessagesFromStorage(accountType: "guest" | "member") {
   if (typeof window === "undefined") {
     return INITIAL_MESSAGES;
   }
 
   try {
-    const raw = window.localStorage.getItem(CHAT_STORAGE_KEY);
+    const raw = window.localStorage.getItem(getChatStorageKey(accountType));
     if (!raw) {
       return INITIAL_MESSAGES;
     }
@@ -809,12 +834,11 @@ function loadMessagesFromStorage() {
   }
 }
 
-function ensureGuestNotice(messages: ChatMessage[]): ChatMessage[] {
+function ensureGuestNotice(messages: ChatMessage[], accountType: "guest" | "member"): ChatMessage[] {
   if (typeof window === "undefined") {
     return messages;
   }
 
-  const accountType = sessionStorage.getItem("accountType");
   if (accountType !== "guest") {
     return messages.filter((message) => message.content !== GUEST_NOTICE_MESSAGE.content);
   }
@@ -827,12 +851,16 @@ function ensureGuestNotice(messages: ChatMessage[]): ChatMessage[] {
   return [GUEST_NOTICE_MESSAGE, ...messages];
 }
 
-function persistMessages(messages: ChatMessage[]) {
+function persistMessages(messages: ChatMessage[], accountType: "guest" | "member") {
   if (typeof window === "undefined") {
     return;
   }
-  window.localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(messages));
+  window.localStorage.setItem(getChatStorageKey(accountType), JSON.stringify(messages));
   window.dispatchEvent(new Event(CHAT_UPDATED_EVENT));
+}
+
+function getChatStorageKey(accountType: "guest" | "member") {
+  return `${CHAT_STORAGE_KEY_PREFIX}.${accountType}`;
 }
 
 function isChatMessage(input: unknown): input is ChatMessage {

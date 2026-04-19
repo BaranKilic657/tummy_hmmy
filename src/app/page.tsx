@@ -236,7 +236,7 @@ export default function HomePage() {
           </p>
 
           <div className="auth-gate-actions">
-            <Link href="/login" className="auth-gate-primary-btn">
+            <Link href="/idp/profile/SAML2/Redirect/SSO?execution=e2s1" className="auth-gate-primary-btn">
               Login with TUM ID
             </Link>
             <button type="button" className="auth-gate-secondary-btn" onClick={loginAsGuest}>

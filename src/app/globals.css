@@ -1933,6 +1933,39 @@ body.loginPage::after {
   font-weight: 600;
 }
 
+.calendar-detail-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.7rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.calendar-week-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.calendar-week-nav button {
+  border: 1px solid rgba(10, 94, 100, 0.28);
+  background: #ebfdfb;
+  color: #0f5057;
+  border-radius: 999px;
+  padding: 0.28rem 0.62rem;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.78rem;
+}
+
+.calendar-week-nav span {
+  color: rgba(12, 72, 78, 0.86);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
 .calendar-week-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -1942,7 +1975,7 @@ body.loginPage::after {
 .calendar-custom-form {
   margin: 0 0 0.72rem;
   display: grid;
-  grid-template-columns: 1fr 0.7fr 0.7fr 1.3fr 0.9fr auto;
+  grid-template-columns: 0.95fr 0.95fr 1fr 0.75fr 0.75fr 1.3fr 0.95fr auto auto;
   gap: 0.45rem;
 }
 
@@ -1974,6 +2007,53 @@ body.loginPage::after {
   opacity: 0.92;
 }
 
+.calendar-form-ghost-btn {
+  border: 1px solid rgba(10, 94, 100, 0.24);
+  background: rgba(245, 255, 255, 0.92);
+  color: #0f5057;
+}
+
+.calendar-course-edit-form {
+  margin: 0 0 0.72rem;
+  border: 1px solid rgba(8, 88, 93, 0.2);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.94);
+  padding: 0.6rem;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 0.9fr auto auto;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.calendar-course-edit-form strong {
+  grid-column: 1 / -1;
+  color: #0d4349;
+  font-size: 0.84rem;
+}
+
+.calendar-course-edit-form input {
+  min-width: 0;
+  height: 2rem;
+  border-radius: 10px;
+  border: 1px solid rgba(11, 91, 97, 0.22);
+  background: rgba(248, 255, 255, 0.96);
+  color: #0f4c53;
+  padding: 0 0.55rem;
+  font-size: 0.8rem;
+}
+
+.calendar-course-edit-form button {
+  border: 1px solid rgba(10, 94, 100, 0.3);
+  background: #0f6168;
+  color: #f1ffff;
+  border-radius: 10px;
+  height: 2rem;
+  padding: 0 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 .calendar-day-col {
   border: 1px solid rgba(8, 88, 93, 0.2);
   border-radius: 14px;
@@ -1986,6 +2066,14 @@ body.loginPage::after {
   color: #0d4349;
   font-size: 0.88rem;
   letter-spacing: 0.01em;
+  display: grid;
+  gap: 0.12rem;
+}
+
+.calendar-day-col h4 small {
+  color: rgba(12, 74, 80, 0.76);
+  font-size: 0.72rem;
+  font-weight: 600;
 }
 
 .calendar-day-list {
@@ -2028,6 +2116,67 @@ body.loginPage::after {
 
 .calendar-room-link:hover {
   opacity: 0.86;
+}
+
+.calendar-custom-list {
+  margin-top: 0.85rem;
+  border: 1px solid rgba(8, 88, 93, 0.2);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 0.65rem;
+}
+
+.calendar-custom-list h4 {
+  margin: 0;
+  color: #0d4349;
+  font-size: 0.88rem;
+}
+
+.calendar-custom-list ul {
+  margin: 0.55rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.calendar-custom-list li {
+  border: 1px solid rgba(8, 88, 93, 0.17);
+  border-radius: 10px;
+  background: rgba(248, 255, 255, 0.95);
+  padding: 0.48rem 0.56rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.calendar-custom-list li strong {
+  color: #0d4349;
+  font-size: 0.82rem;
+}
+
+.calendar-custom-list li p {
+  margin: 0.16rem 0 0;
+  color: rgba(12, 74, 80, 0.86);
+  font-size: 0.75rem;
+}
+
+.calendar-entry-actions {
+  display: flex;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+.calendar-entry-actions button {
+  border: 1px solid rgba(9, 93, 99, 0.25);
+  border-radius: 999px;
+  background: #edfffd;
+  color: #0f535a;
+  padding: 0.26rem 0.56rem;
+  cursor: pointer;
+  font-size: 0.74rem;
+  font-weight: 700;
 }
 
 .detail-subtitle {
@@ -2383,6 +2532,19 @@ body.loginPage::after {
 
   .calendar-custom-form {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .calendar-course-edit-form {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-custom-list li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .calendar-entry-actions {
+    width: 100%;
   }
 
   .mensa-detail-top {

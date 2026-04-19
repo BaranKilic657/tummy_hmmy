@@ -21,6 +21,12 @@ export default function LoginPage() {
 
     const formData = new FormData(event.currentTarget);
     const username = String(formData.get("j_username") ?? "").trim().toLowerCase();
+    const password = String(formData.get("j_password") ?? "").trim();
+
+    if (!username || !password) {
+      setLoginError("Please enter both username and password.");
+      return;
+    }
 
     if (!username.includes("@tum.de")) {
       setLoginError("Username or password was incorrect.");
