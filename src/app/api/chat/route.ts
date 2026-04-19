@@ -268,6 +268,33 @@ async function callVertexGenerateContent(
 
 export async function POST(request: Request) {
   try {
+    const body = (await request.json()) as {
+      messages?: ChatMessage[];
+      calendarEvents?: unknown[];
+      guestMode?: boolean;
+    };
+    const inputMessages = Array.isArray(body.messages) ? body.messages : [];
+    const guestMode = body.guestMode === true;
+
+    if (guestMode) {
+      const latestUserPrompt = [...inputMessages]
+        .reverse()
+        .find((message) => message.role === "user" && message.content.trim().length > 0)
+        ?.content.trim();
+
+      return NextResponse.json({
+        reply: buildGuestModeReply(latestUserPrompt),
+        provider: "guest-sandbox",
+        retrieval: {
+          provider: "none",
+          enabled: false,
+          used: false,
+          endpoint: null,
+          warning: "Guest mode disables live retrieval and external model calls.",
+        },
+      });
+    }
+
     const isDebugEnabled = process.env.CHAT_DEBUG?.trim() === "1" && isLocalhostRequest(request);
     const legacyLlmKey = process.env.LLM_KEY?.trim() || process.env.LLM_API_KEY?.trim();
     const geminiApiKey = process.env.GEMINI_API_KEY?.trim() || process.env.GOOGLE_API_KEY?.trim() || legacyLlmKey;
@@ -311,8 +338,6 @@ export async function POST(request: Request) {
       );
     }
 
-    const body = (await request.json()) as { messages?: ChatMessage[]; calendarEvents?: unknown[] };
-    const inputMessages = Array.isArray(body.messages) ? body.messages : [];
     const calendarEvents = Array.isArray(body.calendarEvents)
       ? body.calendarEvents.filter(isCalendarContextEvent).slice(0, 40)
       : [];
@@ -443,6 +468,28 @@ export async function POST(request: Request) {
     const message = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json({ error: message }, { status: 500 });
   }
+}
+
+function buildGuestModeReply(prompt?: string) {
+  const normalized = (prompt ?? "").toLowerCase();
+
+  if (!normalized) {
+    return "Guest account notice: This is a demo mode. Information may be outdated and some functions are intentionally limited.";
+  }
+
+  if (/email|contact|service desk|support/.test(normalized)) {
+    return "Guest mode demo response: I can suggest drafting a support email, but live contact validation is disabled in guest mode.";
+  }
+
+  if (/calendar|reminder|schedule|ics/.test(normalized)) {
+    return "Guest mode demo response: Calendar and reminder actions are available as local demo features. Please verify all generated details before using them.";
+  }
+
+  if (/room|where|building|navigatum/.test(normalized)) {
+    return "Guest mode demo response: Room and navigation information may be incomplete in guest mode. Use official TUM sources for final confirmation.";
+  }
+
+  return "Guest mode demo response: This account provides non-authoritative demo answers only. For reliable information and full features, log in with a TUM account.";
 }
 
 function isCalendarContextEvent(input: unknown): input is CalendarContextEvent {

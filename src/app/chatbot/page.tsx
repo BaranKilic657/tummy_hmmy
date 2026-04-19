@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { getAccountTypeFromStorage } from "@/lib/auth-session";
 
 type Message = {
   role: "user" | "assistant";
@@ -14,11 +15,18 @@ const INITIAL_MESSAGES: Message[] = [
   },
 ];
 
+const GUEST_NOTICE_MESSAGE: Message = {
+  role: "assistant",
+  content:
+    "Guest account notice: This is a demo guest account. Information may be outdated, and some functions may not work reliably.",
+};
+
 export default function ChatbotPage() {
-  const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
+  const [messages, setMessages] = useState<Message[]>(() => getInitialMessages());
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const isGuest = getAccountTypeFromStorage() === "guest";
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -35,7 +43,7 @@ export default function ChatbotPage() {
     setIsLoading(true);
 
     try {
-      const requestPayload = { messages: nextMessages };
+      const requestPayload = { messages: nextMessages, guestMode: isGuest };
 
       const response = await fetch("/api/chat", {
         method: "POST",
@@ -73,6 +81,11 @@ export default function ChatbotPage() {
     <main className="screen chat-screen">
       <section className="chat-card">
         <h1>Chatbot</h1>
+        {isGuest ? (
+          <p className="guest-mode-banner">
+            Guest mode: responses and features are demo-only and may be incomplete or inaccurate.
+          </p>
+        ) : null}
 
           <div className="chat-toolbar">
             <button type="button" className="chat-secondary-btn" onClick={clearChat} disabled={isLoading}>
@@ -106,4 +119,14 @@ export default function ChatbotPage() {
       </section>
     </main>
   );
+}
+
+function getInitialMessages(): Message[] {
+  if (typeof window === "undefined") {
+    return INITIAL_MESSAGES;
+  }
+
+  return sessionStorage.getItem("accountType") === "guest"
+    ? [GUEST_NOTICE_MESSAGE, ...INITIAL_MESSAGES]
+    : INITIAL_MESSAGES;
 }

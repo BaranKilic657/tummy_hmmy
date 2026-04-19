@@ -13,6 +13,7 @@ export function CopilotDetail() {
     error,
     pendingActions,
     actionStatus,
+    isGuestMode,
     clearChat,
     dismissAction,
     runAction,
@@ -104,7 +105,13 @@ export function CopilotDetail() {
 
       {error ? <p className="chat-error">{error}</p> : null}
 
-      <details className="agent-actions-panel" aria-label="Planned copilot actions" open={pendingActions.length > 0}>
+      {isGuestMode ? (
+        <p className="guest-mode-banner">
+          Guest mode limitation: Action workflows are disabled. Log in with a TUM account for calendar sync,
+          reminders, drafts, and registration automation.
+        </p>
+      ) : (
+        <details className="agent-actions-panel" aria-label="Planned copilot actions" open={pendingActions.length > 0}>
         <summary className="agent-actions-summary-row">
           <span>Action Center</span>
           <span>{pendingActions.length} pending</span>
@@ -138,8 +145,11 @@ export function CopilotDetail() {
           <p>"Draft an email to my tutor asking for an extension."</p>
           <p>"Prepare registration steps for IN2064 in SS2026."</p>
           <p>"Add exam prep on Wednesday from 14:00 to 16:00 in Library."</p>
+          <p>"Sync this event to my personal calendar."</p>
+          <p>"Create a reminder for course registration next Monday at 08:30."</p>
         </div>
-      </details>
+        </details>
+      )}
     </section>
   );
 }

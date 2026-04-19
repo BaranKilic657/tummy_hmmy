@@ -3,20 +3,22 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { AUTH_ACCOUNT_TYPE_KEY, AUTH_LOGIN_KEY, type AccountType } from "@/lib/auth-session";
 
 type TopBarProps = {
   title: string;
+  accountType?: AccountType;
 };
 
-export function TopBar({ title }: TopBarProps) {
+export function TopBar({ title, accountType = "member" }: TopBarProps) {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const syncLoginState = () => {
-      const loggedIn = sessionStorage.getItem("isLoggedIn") === "true";
+      const loggedIn = sessionStorage.getItem(AUTH_LOGIN_KEY) === "true";
       setIsLoggedIn(loggedIn);
-      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem(AUTH_LOGIN_KEY);
     };
 
     syncLoginState();
@@ -26,8 +28,9 @@ export function TopBar({ title }: TopBarProps) {
   }, []);
 
   const handleLogout = () => {
-    sessionStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("isLoggedIn");
+    sessionStorage.removeItem(AUTH_LOGIN_KEY);
+    sessionStorage.removeItem(AUTH_ACCOUNT_TYPE_KEY);
+    localStorage.removeItem(AUTH_LOGIN_KEY);
     setIsLoggedIn(false);
     window.dispatchEvent(new Event("auth-state-changed"));
     router.push("/");
@@ -48,8 +51,10 @@ export function TopBar({ title }: TopBarProps) {
             className={`home-avatar ${isLoggedIn ? "home-avatar-large" : ""}`}
             aria-label={isLoggedIn ? "Open profile" : "Login with TUM ID"}
           >
-            {isLoggedIn ? (
+            {isLoggedIn && accountType !== "guest" ? (
               <img src="/picture.png" alt="Profile" className="home-avatar-image" />
+            ) : isLoggedIn && accountType === "guest" ? (
+              "GST"
             ) : (
               "TUM"
             )}
@@ -57,16 +62,18 @@ export function TopBar({ title }: TopBarProps) {
 
           {isLoggedIn ? (
             <div className="home-profile-popover" role="menu" aria-label="Profile menu">
-              <p className="home-profile-title">TUM Account</p>
+              <p className="home-profile-title">{accountType === "guest" ? "Guest Account" : "TUM Account"}</p>
               <Link href="/" className="home-profile-item" role="menuitem">
                 Dashboard
               </Link>
               <Link href="/chatbot" className="home-profile-item" role="menuitem">
                 Assistant
               </Link>
-              <Link href="/login" className="home-profile-item" role="menuitem">
-                Settings
-              </Link>
+              {accountType !== "guest" ? (
+                <Link href="/login" className="home-profile-item" role="menuitem">
+                  Settings
+                </Link>
+              ) : null}
               <button
                 type="button"
                 className="home-profile-item home-profile-item-danger"

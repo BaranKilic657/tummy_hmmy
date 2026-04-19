@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { AUTH_ACCOUNT_TYPE_KEY, AUTH_LOGIN_KEY } from "@/lib/auth-session";
 
 export default function LoginPage() {
   const router = useRouter();
+  const [loginError, setLoginError] = useState("");
 
   useEffect(() => {
     document.body.classList.add("loginPage");
@@ -16,8 +18,19 @@ export default function LoginPage() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    sessionStorage.setItem("isLoggedIn", "true");
-    localStorage.removeItem("isLoggedIn");
+
+    const formData = new FormData(event.currentTarget);
+    const username = String(formData.get("j_username") ?? "").trim().toLowerCase();
+
+    if (!username.includes("@tum.de")) {
+      setLoginError("Username or password was incorrect.");
+      return;
+    }
+
+    setLoginError("");
+    sessionStorage.setItem(AUTH_LOGIN_KEY, "true");
+    sessionStorage.setItem(AUTH_ACCOUNT_TYPE_KEY, "member");
+    localStorage.removeItem(AUTH_LOGIN_KEY);
     window.dispatchEvent(new Event("auth-state-changed"));
     router.push("/");
   };
@@ -66,6 +79,11 @@ export default function LoginPage() {
               TUM Login
             </h1>
             <p>Login using your TUM-ID to:</p>
+            {loginError ? (
+              <p role="alert" className="login-error-banner">
+                {loginError}
+              </p>
+            ) : null}
 
             <div id="sp-info">
               <h2 id="title-h2">TUM Moodle</h2>

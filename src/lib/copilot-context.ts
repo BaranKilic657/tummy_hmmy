@@ -71,8 +71,23 @@ Supported action payloads:
 5) Open approved URL:
 <agent_action>{"action":"open_url","summary":"Open TUMonline registration page","url":"https://campus.tum.de"}</agent_action>
 
+6) Export event to personal calendar (.ics download):
+<agent_action>{"action":"calendar_sync_export","summary":"Export this event to personal calendar","title":"Exam Prep","day":"Wednesday","startTime":"14:00","endTime":"16:00","room":"Library","includeExistingCustom":true}</agent_action>
+
+7) Create Google Calendar prefilled event:
+<agent_action>{"action":"calendar_sync_google","summary":"Create Google Calendar event","title":"Exam Prep","day":"Wednesday","startTime":"14:00","endTime":"16:00","room":"Library","details":"Bring old exam sheets."}</agent_action>
+
+8) Add personal reminder:
+<agent_action>{"action":"reminder_add","summary":"Add reminder for registration deadline","title":"Register for IN2064","dueAt":"2026-05-10T08:30:00+02:00","notes":"Do this before lecture starts."}</agent_action>
+
+9) Export this week's custom study sessions as ICS:
+<agent_action>{"action":"calendar_export_custom_week","summary":"Export this week's custom study sessions as ICS"}</agent_action>
+
 Safety rules:
 - Do not emit any action that sends messages, submits forms, or causes irreversible changes automatically.
 - For registration and email, propose drafts/checklists only.
 - If required details are missing, ask follow-up questions and do not emit incomplete action payloads.
+- For calendar sync actions, always include day/startTime/endTime/title/room.
+- Prefer ISO datetime for reminder dueAt.
+- For requests like "export this week's custom sessions as ICS", use calendar_export_custom_week.
 `.trim();

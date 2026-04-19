@@ -2,7 +2,11 @@ export type WeekDay = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday"
 
 export type AgentActionType =
   | "calendar_add"
+  | "calendar_sync_export"
+  | "calendar_export_custom_week"
+  | "calendar_sync_google"
   | "email_draft"
+  | "reminder_add"
   | "course_watch_add"
   | "course_registration_assist"
   | "open_url";
@@ -22,11 +26,42 @@ export type CalendarAddAgentAction = AgentActionBase & {
   room: string;
 };
 
+export type CalendarSyncExportAgentAction = AgentActionBase & {
+  action: "calendar_sync_export";
+  title: string;
+  day: WeekDay;
+  startTime: string;
+  endTime: string;
+  room: string;
+  includeExistingCustom?: boolean;
+};
+
+export type CalendarSyncGoogleAgentAction = AgentActionBase & {
+  action: "calendar_sync_google";
+  title: string;
+  day: WeekDay;
+  startTime: string;
+  endTime: string;
+  room: string;
+  details?: string;
+};
+
+export type CalendarExportCustomWeekAgentAction = AgentActionBase & {
+  action: "calendar_export_custom_week";
+};
+
 export type EmailDraftAgentAction = AgentActionBase & {
   action: "email_draft";
   to: string;
   subject: string;
   body: string;
+};
+
+export type ReminderAddAgentAction = AgentActionBase & {
+  action: "reminder_add";
+  title: string;
+  dueAt: string;
+  notes?: string;
 };
 
 export type CourseWatchAddAgentAction = AgentActionBase & {
@@ -52,7 +87,11 @@ export type OpenUrlAgentAction = AgentActionBase & {
 
 export type AgentAction =
   | CalendarAddAgentAction
+  | CalendarSyncExportAgentAction
+  | CalendarExportCustomWeekAgentAction
+  | CalendarSyncGoogleAgentAction
   | EmailDraftAgentAction
+  | ReminderAddAgentAction
   | CourseWatchAddAgentAction
   | CourseRegistrationAssistAgentAction
   | OpenUrlAgentAction;
@@ -119,6 +158,62 @@ function parseSingleAction(payload: string): AgentAction | null {
       };
     }
 
+    if (actionType === "calendar_sync_export") {
+      const day = asWeekDay(parsed.day);
+      const startTime = asTime(parsed.startTime);
+      const endTime = asTime(parsed.endTime);
+      const title = asString(parsed.title);
+      const room = asString(parsed.room);
+
+      if (!day || !startTime || !endTime || !title || !room || startTime >= endTime) {
+        return null;
+      }
+
+      return {
+        id: buildActionId(),
+        action: "calendar_sync_export",
+        summary: asString(parsed.summary) ?? `Export calendar event for ${title}`,
+        title,
+        day,
+        startTime,
+        endTime,
+        room,
+        includeExistingCustom: Boolean(parsed.includeExistingCustom),
+      };
+    }
+
+    if (actionType === "calendar_sync_google") {
+      const day = asWeekDay(parsed.day);
+      const startTime = asTime(parsed.startTime);
+      const endTime = asTime(parsed.endTime);
+      const title = asString(parsed.title);
+      const room = asString(parsed.room);
+
+      if (!day || !startTime || !endTime || !title || !room || startTime >= endTime) {
+        return null;
+      }
+
+      return {
+        id: buildActionId(),
+        action: "calendar_sync_google",
+        summary: asString(parsed.summary) ?? `Create Google Calendar event for ${title}`,
+        title,
+        day,
+        startTime,
+        endTime,
+        room,
+        details: asString(parsed.details) ?? undefined,
+      };
+    }
+
+    if (actionType === "calendar_export_custom_week") {
+      return {
+        id: buildActionId(),
+        action: "calendar_export_custom_week",
+        summary: asString(parsed.summary) ?? "Export this week's custom study sessions as ICS",
+      };
+    }
+
     if (actionType === "email_draft") {
       const to = asString(parsed.to);
       const subject = asString(parsed.subject);
@@ -135,6 +230,24 @@ function parseSingleAction(payload: string): AgentAction | null {
         to,
         subject,
         body,
+      };
+    }
+
+    if (actionType === "reminder_add") {
+      const title = asString(parsed.title);
+      const dueAt = asDateTimeString(parsed.dueAt);
+
+      if (!title || !dueAt) {
+        return null;
+      }
+
+      return {
+        id: buildActionId(),
+        action: "reminder_add",
+        summary: asString(parsed.summary) ?? `Create reminder: ${title}`,
+        title,
+        dueAt,
+        notes: asString(parsed.notes) ?? undefined,
       };
     }
 
@@ -253,6 +366,33 @@ function asSafeUrl(value: unknown): string | null {
   } catch {
     return null;
   }
+}
+
+function asDateTimeString(value: unknown): string | null {
+  if (typeof value !== "string") {
+    return null;
+  }
+
+  const trimmed = value.trim();
+  if (!trimmed) {
+    return null;
+  }
+
+  const numericTs = Number(trimmed);
+  if (Number.isFinite(numericTs) && numericTs > 0) {
+    const numericDate = new Date(numericTs);
+    if (Number.isNaN(numericDate.getTime())) {
+      return null;
+    }
+    return numericDate.toISOString();
+  }
+
+  const parsed = new Date(trimmed);
+  if (Number.isNaN(parsed.getTime())) {
+    return null;
+  }
+
+  return parsed.toISOString();
 }
 
 function buildActionId() {
