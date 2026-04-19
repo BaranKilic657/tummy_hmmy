@@ -22,6 +22,10 @@ body {
   animation: gradient-orbit 14s linear infinite;
 }
 
+body.home-focus-open {
+  overflow: hidden;
+}
+
 body::before,
 body::after {
   content: "";
@@ -793,6 +797,94 @@ body.loginPage::after {
 .chat-secondary-btn:disabled {
   opacity: 0.7;
   cursor: not-allowed;
+}
+
+.agent-actions-panel {
+  margin-top: 0.85rem;
+  border: 1px solid rgba(11, 82, 88, 0.22);
+  border-radius: 12px;
+  background: rgba(246, 255, 255, 0.9);
+  padding: 0.6rem;
+}
+
+.agent-actions-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.agent-actions-head h3 {
+  margin: 0;
+  font-size: 0.92rem;
+  color: #0e4c52;
+}
+
+.agent-actions-head span {
+  border-radius: 999px;
+  border: 1px solid rgba(11, 86, 92, 0.24);
+  background: rgba(255, 255, 255, 0.76);
+  padding: 0.12rem 0.5rem;
+  font-size: 0.72rem;
+  color: #0b4c53;
+}
+
+.agent-actions-status {
+  margin: 0.5rem 0 0;
+  color: #0e5056;
+  font-size: 0.85rem;
+}
+
+.agent-actions-empty {
+  margin: 0.5rem 0 0;
+  color: #33646b;
+  font-size: 0.88rem;
+}
+
+.agent-actions-list {
+  margin-top: 0.55rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.agent-action-card {
+  border: 1px solid rgba(11, 84, 89, 0.2);
+  border-radius: 10px;
+  background: rgba(254, 255, 255, 0.95);
+  padding: 0.5rem;
+}
+
+.agent-action-type {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.68rem;
+  color: rgba(12, 80, 86, 0.78);
+}
+
+.agent-action-summary {
+  margin: 0.2rem 0 0;
+  color: #09363b;
+  font-size: 0.88rem;
+}
+
+.agent-action-buttons {
+  margin-top: 0.45rem;
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.agent-actions-examples {
+  margin-top: 0.65rem;
+  border-top: 1px solid rgba(12, 83, 89, 0.16);
+  padding-top: 0.5rem;
+}
+
+.agent-actions-examples p {
+  margin: 0.25rem 0;
+  font-size: 0.82rem;
+  color: #27575d;
 }
 
 .chat-debug-panel {
@@ -1901,17 +1993,73 @@ body.loginPage::after {
   gap: 0.62rem;
 }
 
+.copilot-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
 .copilot-detail-messages {
-  max-height: 52vh;
-  min-height: 280px;
+  flex: 1 1 auto;
+  max-height: none;
+  min-height: 0;
   border: 1px solid rgba(10, 93, 99, 0.2);
   border-radius: 12px;
   background: rgba(250, 255, 255, 0.86);
   padding: 0.65rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable both-edges;
+  scroll-behavior: smooth;
+}
+
+.copilot-detail-messages::-webkit-scrollbar {
+  width: 11px;
+}
+
+.copilot-detail-messages::-webkit-scrollbar-track {
+  background: rgba(233, 250, 251, 0.7);
+  border-radius: 999px;
+}
+
+.copilot-detail-messages::-webkit-scrollbar-thumb {
+  background: rgba(16, 103, 110, 0.45);
+  border-radius: 999px;
+  border: 2px solid rgba(233, 250, 251, 0.7);
+}
+
+.copilot-jump-wrap {
+  margin-top: -0.2rem;
+  display: flex;
+  justify-content: center;
 }
 
 .copilot-detail-form {
   margin-top: 0;
+}
+
+.copilot-detail-form-sticky {
+  padding: 0.55rem;
+  border-radius: 12px;
+  border: 1px solid rgba(10, 93, 99, 0.18);
+  background: rgba(244, 255, 255, 0.96);
+}
+
+.agent-actions-summary-row {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-weight: 700;
+  color: #0a4f55;
+}
+
+.agent-actions-summary-row::-webkit-details-marker {
+  display: none;
 }
 
 .copilot-detail .navigator-form,
@@ -2009,11 +2157,15 @@ body.loginPage::after {
   left: 50%;
   top: 7vh;
   width: min(94vw, 980px);
+  max-height: 90vh;
   border-radius: 20px;
   border: 1px solid rgba(8, 89, 95, 0.28);
   background: rgba(241, 255, 255, 0.98);
   box-shadow: 0 26px 78px rgba(2, 32, 36, 0.35);
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   transform: translateX(-50%) translateY(16px) scale(0.96);
   opacity: 0;
   transition: transform 0.28s cubic-bezier(0.2, 0.75, 0.2, 1), opacity 0.28s ease;
@@ -2054,6 +2206,28 @@ body.loginPage::after {
 
 .focus-body .widget {
   min-height: 0;
+}
+
+.focus-body {
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow: auto;
+}
+
+.focus-body .copilot-detail {
+  height: 100%;
+  min-height: 0;
+}
+
+.focus-body .copilot-chat-detail {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.focus-body .agent-actions-panel {
+  max-height: 30vh;
+  overflow: auto;
 }
 
 .focus-body .widget-calendar .calendar-preview-hint {
@@ -2174,7 +2348,20 @@ body.loginPage::after {
   .focus-modal {
     top: 4vh;
     max-height: 92vh;
-    overflow: auto;
+    overflow: hidden;
+  }
+
+  .copilot-detail-messages {
+    min-height: 220px;
+    max-height: none;
+  }
+
+  .copilot-detail-form-sticky {
+    position: static;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    backdrop-filter: none;
   }
 
   .transit-item {

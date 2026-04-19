@@ -95,6 +95,24 @@ export default function HomePage() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [activeTile]);
 
+  useEffect(() => {
+    if (typeof document === "undefined") {
+      return;
+    }
+
+    if (activeTile) {
+      document.body.classList.add("home-focus-open");
+      return () => {
+        document.body.classList.remove("home-focus-open");
+      };
+    }
+
+    document.body.classList.remove("home-focus-open");
+    return () => {
+      document.body.classList.remove("home-focus-open");
+    };
+  }, [activeTile]);
+
   const renderDashboardTile = (tileId: DashboardTileId): ReactNode => {
     switch (tileId) {
       case "copilot":
