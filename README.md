@@ -4,7 +4,7 @@ TUMmy is a Next.js dashboard and assistant for TUM student workflows.
 
 It combines:
 - Campus widgets (Mensa, NavigaTUM, transit, rooms)
-- A Copilot chat pipeline (Cognee retrieval + Gemini/Vertex generation)
+- An Agent API pipeline (Cognee retrieval + Gemini/Vertex generation)
 - Action-oriented assistant flows (calendar, reminders, email drafts, watchlists)
 - Guest/member session modes with scoped chat history
 
@@ -17,7 +17,7 @@ Live integrations:
 - NavigaTUM search/location/route
 - MVG departures (U6 at Garching Forschungszentrum)
 - TUM NAT room data
-- Chat API with Cognee retrieval + LLM generation
+- Agent API with Cognee retrieval + LLM generation
 
 Demo/local behavior:
 - Login is session-based mock auth (not real TUM SSO)
@@ -154,13 +154,13 @@ Auth is client-side session mock auth:
 
 Guest mode:
 - Restricted tile visibility on dashboard
-- Chat endpoint runs in sandbox mode (no live retrieval or external LLM calls)
+- Agent endpoint runs in sandbox mode (no live retrieval or external LLM calls)
 - Action workflows are blocked in Copilot Action Center
 - Chat history is scoped by account type to prevent guest/member leakage
 
-## Chat and Agent Pipeline
+## Agent API Pipeline
 
-Main route: `POST /api/chat`
+Main Agent API route: `POST /api/chat`
 
 Flow:
 1. Validate incoming message history
@@ -200,9 +200,10 @@ Calendar supports two editable layers:
 
 ## API Endpoints
 
-### Chat and agent
+### Agent API
 
 - `POST /api/chat`
+  - Role: Main Agent API orchestration endpoint
   - Body: `{ messages, calendarEvents?, guestMode? }`
   - Returns: assistant reply, provider, retrieval metadata, optional localhost debug
 
@@ -250,5 +251,5 @@ Common keys used by app behavior:
 
 - Keep API wrappers in `src/server/public-campus/*` as the only place external payloads are normalized.
 - Keep client components free from direct external API calls.
-- For chat changes, preserve provider fail-fast behavior and localhost-only debug gating.
+- For Agent API changes, preserve provider fail-fast behavior and localhost-only debug gating.
 - For calendar changes, keep custom events and built-in course overrides as separate layers.
